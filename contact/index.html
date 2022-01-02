@@ -11,7 +11,7 @@
 <link rel="dns-prefetch" href="//s.w.org">
 <link rel="alternate" type="application/rss+xml" title="Tan Yong Sheng &raquo; Feed" href="https://tanyongsheng.xyz/feed/">
 <link rel="alternate" type="application/rss+xml" title="Tan Yong Sheng &raquo; Comments Feed" href="https://tanyongsheng.xyz/comments/feed/">
-<link rel="stylesheet" id="blocksy-dynamic-global-css" href="https://tanyongsheng.xyz/wp-content/uploads/blocksy/css/global.css?ver=95384" media="all">
+<link rel="stylesheet" id="blocksy-dynamic-global-css" href="https://tanyongsheng.xyz/wp-content/uploads/blocksy/css/global.css?ver=97996" media="all">
 <link rel="stylesheet" id="wp-block-library-css" href="https://tanyongsheng.xyz/wp-includes/css/dist/block-library/style.min.css?ver=5.8.2" media="all">
 <link rel="stylesheet" id="elementor-icons-css" href="https://tanyongsheng.xyz/wp-content/plugins/elementor/assets/lib/eicons/css/elementor-icons.min.css?ver=5.13.0" media="all">
 <link rel="stylesheet" id="elementor-frontend-css" href="https://tanyongsheng.xyz/wp-content/plugins/elementor/assets/css/frontend-lite.min.css?ver=3.5.3" media="all">
@@ -28,8 +28,26 @@
 <link rel="shortlink" href="https://tanyongsheng.xyz/?p=75">
 <link rel="alternate" type="application/json+oembed" href="https://tanyongsheng.xyz/wp-json/oembed/1.0/embed?url=https%3A%2F%2Ftanyongsheng.xyz%2Fcontact%2F">
 <link rel="alternate" type="text/xml+oembed" href="https://tanyongsheng.xyz/wp-json/oembed/1.0/embed?url=https%3A%2F%2Ftanyongsheng.xyz%2Fcontact%2F&#038;format=xml">
-<!-- HFCM by 99 Robots - Snippet # 1: Google analytics -->
-<!-- Global site tag (gtag.js) - Google Analytics -->
+<script>
+
+	// javascript
+  window.onload = function() { 
+    var el = document.getElementById('g-recaptcha-response'); 
+    if (el) { 
+      el.setAttribute('required', 'required'); 
+    } 
+  }
+
+</script>
+<style>/* CSS */
+#g-recaptcha-response {
+display: block !important;
+position: absolute;
+margin: -50px 0 0 0 !important;
+z-index: -999999;
+opacity: 0;
+}</style>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-194669938-1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -39,7 +57,6 @@
   gtag('config', 'UA-194669938-1');
 </script>
 
-<!-- /end HFCM by 99 Robots -->
 <noscript><link rel="stylesheet" href="https://tanyongsheng.xyz/wp-content/themes/blocksy/static/bundle/no-scripts.min.css" type="text/css"></noscript>
 	</head>
 
@@ -132,24 +149,35 @@
 		</div>
 				<div class="elementor-column elementor-col-50 elementor-inner-column elementor-element elementor-element-e91a712" data-id="e91a712" data-element_type="column">
 			<div class="elementor-widget-wrap elementor-element-populated">
-								<div class="elementor-element elementor-element-929e8b6 elementor-widget elementor-widget-text-editor" data-id="929e8b6" data-element_type="widget" data-widget_type="text-editor.default">
+								<div class="elementor-element elementor-element-350370d elementor-widget elementor-widget-text-editor" data-id="350370d" data-element_type="widget" data-widget_type="text-editor.default">
 				<div class="elementor-widget-container">
 			<style>/*! elementor - v3.5.3 - 28-12-2021 */
-.elementor-widget-text-editor.elementor-drop-cap-view-stacked .elementor-drop-cap{background-color:#818a91;color:#fff}.elementor-widget-text-editor.elementor-drop-cap-view-framed .elementor-drop-cap{color:#818a91;border:3px solid;background-color:transparent}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap{margin-top:8px}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap-letter{width:1em;height:1em}.elementor-widget-text-editor .elementor-drop-cap{float:left;text-align:center;line-height:1;font-size:50px}.elementor-widget-text-editor .elementor-drop-cap-letter{display:inline-block}</style>				<form action="https://formspree.io/f/xlezdbbz" method="POST">
+.elementor-widget-text-editor.elementor-drop-cap-view-stacked .elementor-drop-cap{background-color:#818a91;color:#fff}.elementor-widget-text-editor.elementor-drop-cap-view-framed .elementor-drop-cap{color:#818a91;border:3px solid;background-color:transparent}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap{margin-top:8px}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap-letter{width:1em;height:1em}.elementor-widget-text-editor .elementor-drop-cap{float:left;text-align:center;line-height:1;font-size:50px}.elementor-widget-text-editor .elementor-drop-cap-letter{display:inline-block}</style>				
+  
+    <title>Tan Yong Shen</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  
+  
+    <form action="https://formspree.io/f/{form_id}" method="POST">
 <label>
-Your name:
-<input name="name" type="email">
-</label>
-<label>
-Your email:
-<input name="email" type="email">
-</label>
-<label>
-Your message:
-<textarea name="message">
-</textarea></label>
-<button type="submit">Submit</button>
-</form>						</div>
+    Your name:
+    <input type="text" name="Name">
+  </label>
+      <label>
+    Your email:
+    <input type="email" name="Email">
+  </label>
+  <label>
+    Your message:
+    <textarea name="Message"></textarea>
+  </label>
+
+      <div class="g-recaptcha" data-sitekey="your_site_key"></div> <!-- replace with your recaptcha SITE key not secret key -->
+      <br>
+      <input type="submit" value="Submit">
+    </form>
+  
+						</div>
 				</div>
 					</div>
 		</div>
@@ -292,6 +320,7 @@ Your message:
 var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false,"isScriptDebug":false},"i18n":{"shareOnFacebook":"Share on Facebook","shareOnTwitter":"Share on Twitter","pinIt":"Pin it","download":"Download","downloadImage":"Download image","fullscreen":"Fullscreen","zoom":"Zoom","share":"Share","playVideo":"Play Video","previous":"Previous","next":"Next","close":"Close"},"is_rtl":false,"breakpoints":{"xs":0,"sm":480,"md":768,"lg":1025,"xl":1440,"xxl":1600},"responsive":{"breakpoints":{"mobile":{"label":"Mobile","value":767,"default_value":767,"direction":"max","is_enabled":true},"mobile_extra":{"label":"Mobile Extra","value":880,"default_value":880,"direction":"max","is_enabled":false},"tablet":{"label":"Tablet","value":1024,"default_value":1024,"direction":"max","is_enabled":true},"tablet_extra":{"label":"Tablet Extra","value":1200,"default_value":1200,"direction":"max","is_enabled":false},"laptop":{"label":"Laptop","value":1366,"default_value":1366,"direction":"max","is_enabled":false},"widescreen":{"label":"Widescreen","value":2400,"default_value":2400,"direction":"min","is_enabled":false}}},"version":"3.5.3","is_static":false,"experimentalFeatures":{"e_dom_optimization":true,"e_optimized_assets_loading":true,"e_optimized_css_loading":true,"a11y_improvements":true,"e_import_export":true,"additional_custom_breakpoints":true,"e_hidden_wordpress_widgets":true,"landing-pages":true,"elements-color-picker":true,"favorite-widgets":true,"admin-top-bar":true},"urls":{"assets":"https:\/\/tanyongsheng.xyz\/wp-content\/plugins\/elementor\/assets\/"},"settings":{"page":[],"editorPreferences":[]},"kit":{"active_breakpoints":["viewport_mobile","viewport_tablet"],"global_image_lightbox":"yes","lightbox_enable_counter":"yes","lightbox_enable_fullscreen":"yes","lightbox_enable_zoom":"yes","lightbox_enable_share":"yes","lightbox_title_src":"title","lightbox_description_src":"description"},"post":{"id":75,"title":"Contact%20%E2%80%93%20Tan%20Yong%20Sheng","excerpt":"","featuredImage":false}};
 </script>
 <script src="https://tanyongsheng.xyz/wp-content/plugins/elementor/assets/js/frontend.min.js?ver=3.5.3" id="elementor-frontend-js"></script>
+
 
 </body>
 </html>
