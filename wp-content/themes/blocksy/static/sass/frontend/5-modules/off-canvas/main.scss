@@ -59,12 +59,13 @@ body[data-panel] {
 		padding-top: 30px;
 	}
 
-	h6 {
-		margin-bottom: 0;
+	.ct-panel-heading {
+		font-size: 15px;
+		font-weight: 600;
 	}
 
 	.close-button {
-		margin-left: auto;
+		margin-inline-start: auto;
 	}
 }
 

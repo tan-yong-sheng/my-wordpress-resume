@@ -8,8 +8,9 @@
 	}
 
 	.ct-menu-link {
-		--menu-item-padding: var(--items-vertical-spacing, 5px) 0;
+		text-align: var(--text-horizontal-alignment);
 		justify-content: var(--horizontal-alignment);
+		--menu-item-padding: var(--items-vertical-spacing, 5px) 0;
 	}
 
 	.ct-sub-menu-parent {

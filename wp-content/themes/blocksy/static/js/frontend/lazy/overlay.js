@@ -119,12 +119,12 @@ const showOffcanvas = (settings) => {
 	 * propagate the current clck event up the chain -- without the modal
 	 * getting closed.
 	 */
-	requestAnimationFrame(() => {
-		window.addEventListener('click', settings.handleWindowClick)
+	window.addEventListener('click', settings.handleWindowClick, {
+		capture: true,
 	})
 
 	ctEvents.trigger('ct:modal:opened', settings.container)
-	;[...settings.container.querySelectorAll('.ct-toggle-dopdown-mobile')].map(
+	;[...settings.container.querySelectorAll('.ct-toggle-dropdown-mobile')].map(
 		(arrow) => {
 			mountMobileMenu(arrow)
 		}
@@ -198,7 +198,9 @@ const hideOffcanvas = (settings, args = {}) => {
 		)
 	}
 
-	window.removeEventListener('click', settings.handleWindowClick)
+	window.removeEventListener('click', settings.handleWindowClick, {
+		capture: true,
+	})
 
 	settings.container.removeEventListener(
 		'click',
@@ -254,14 +256,11 @@ export const handleClick = (e, settings) => {
 				return
 			}
 
-			if (
-				e.target.classList.contains('ct-header-account') ||
-				e.target.closest('.ct-header-account')
-			) {
+			if (!document.body.hasAttribute('data-panel')) {
 				return
 			}
 
-			document.body.hasAttribute('data-panel') && hideOffcanvas(settings)
+			hideOffcanvas(settings)
 		},
 		...settings,
 	}

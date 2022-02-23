@@ -12,13 +12,13 @@
 	<atom:link href="https://tanyongsheng.xyz/feed/" rel="self" type="application/rss+xml" />
 	<link>https://tanyongsheng.xyz</link>
 	<description></description>
-	<lastBuildDate>Thu, 30 Dec 2021 10:47:09 +0000</lastBuildDate>
+	<lastBuildDate>Sun, 02 Jan 2022 09:48:36 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
 	1	</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=5.8.2</generator>
+	<generator>https://wordpress.org/?v=5.9.1</generator>
 
 <image>
 	<url>https://tanyongsheng.xyz/wp-content/uploads/2022/01/TYS-round-photo.jpg</url>
@@ -27,25 +27,5 @@
 	<width>32</width>
 	<height>32</height>
 </image> 
-	<item>
-		<title>Hello world!</title>
-		<link>https://tanyongsheng.xyz/hello-world/</link>
-					<comments>https://tanyongsheng.xyz/hello-world/#comments</comments>
-		
-		<dc:creator><![CDATA[tanyongsheng]]></dc:creator>
-		<pubDate>Thu, 30 Dec 2021 10:47:09 +0000</pubDate>
-				<category><![CDATA[Uncategorized]]></category>
-		<guid isPermaLink="false">https://tanyongsheng.xyz/?p=1</guid>
-
-					<description><![CDATA[Welcome to WordPress. This is your first post. Edit or delete it, then start writing!]]></description>
-										<content:encoded><![CDATA[
-<p>Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p>
-]]></content:encoded>
-					
-					<wfw:commentRss>https://tanyongsheng.xyz/hello-world/feed/</wfw:commentRss>
-			<slash:comments>1</slash:comments>
-		
-		
-			</item>
-	</channel>
+</channel>
 </rss>

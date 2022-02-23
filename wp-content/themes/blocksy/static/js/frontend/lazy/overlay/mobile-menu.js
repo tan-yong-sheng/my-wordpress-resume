@@ -43,7 +43,7 @@ const handleContainer = (container) => {
 		return
 	}
 
-	const arrow = container.querySelector('.ct-toggle-dopdown-mobile')
+	const arrow = container.querySelector('.ct-toggle-dropdown-mobile')
 
 	if (container.classList.contains('dropdown-active')) {
 		arrow.setAttribute('aria-expanded', 'false')
@@ -61,7 +61,8 @@ const handleContainer = (container) => {
 		arrow.setAttribute('aria-expanded', 'true')
 		arrow.setAttribute('aria-label', ct_localizations.collapse_submenu)
 		;[...container.parentNode.children].map(
-			(el) => el.classList.contains('dropdown-active') && handleContainer(el)
+			(el) =>
+				el.classList.contains('dropdown-active') && handleContainer(el)
 		)
 
 		container.classList.toggle('dropdown-active')

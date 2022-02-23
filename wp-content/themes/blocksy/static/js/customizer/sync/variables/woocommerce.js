@@ -18,7 +18,6 @@ export const getWooVariablesFor = () => ({
 			responsive: true,
 			unit: '',
 			extractValue: (value) => {
-
 				if (!value.desktop) {
 					return value
 				}
