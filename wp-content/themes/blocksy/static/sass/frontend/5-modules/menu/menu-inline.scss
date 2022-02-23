@@ -1,6 +1,4 @@
 [class*="menu-inline"] {
-	overflow: hidden; // if items spacing is too big
-
 	ul {
 		flex-wrap: wrap;
 		justify-content: var(--horizontal-alignment);

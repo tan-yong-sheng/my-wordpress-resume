@@ -13,7 +13,7 @@ export const DeviceManagerActionsContext = createContext()
 export const useDeviceManagerState = () => {
 	const context = useContext(DeviceManagerStateContext)
 
-	return context || { currentView: 'desktop' }
+	return context || {}
 }
 
 export const useDeviceManagerActions = () => {

@@ -1,5 +1,3 @@
-import { __ } from 'ct-i18n'
-
 export const getDefaultFonts = ({ isDefault }) => ({
 	system: {
 		type: 'system',
@@ -18,14 +16,10 @@ export const getDefaultFonts = ({ isDefault }) => ({
 			'Gill Sans',
 			'Impact',
 			'Serif',
-			'monospace',
-		].map((family) => ({
+			'monospace'
+		].map(family => ({
 			source: 'system',
 			family,
-			display:
-				family === 'System Default'
-					? __('System Default', 'blocksy')
-					: family,
 			variations: [],
 			all_variations: [
 				...(family === 'Default' ? ['Default'] : []),
@@ -46,8 +40,8 @@ export const getDefaultFonts = ({ isDefault }) => ({
 				'n8',
 				'i8',
 				'n9',
-				'i9',
-			],
-		})),
-	},
+				'i9'
+			]
+		}))
+	}
 })

@@ -273,7 +273,7 @@ export const mountDynamicChunks = () => {
 						}
 					}
 
-					document.addEventListener('scroll', cb, { passive: true })
+					document.addEventListener('scroll', cb)
 				}, 500)
 			}
 		} else {

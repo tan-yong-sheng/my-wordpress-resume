@@ -130,12 +130,8 @@ export default class Slider extends Component {
 			: currentUnit || defaultUnit
 
 	getCurrentUnit = () => {
-		let defaultUnit = this.props.option.units
-			? this.props.option.units[0].unit
-			: ''
-
-		if (this.props.value === 'NaN' || this.props.value === '') {
-			return defaultUnit
+		if (this.props.value === 'NaN') {
+			return ''
 		}
 
 		return this.props.option.units
@@ -249,10 +245,6 @@ export default class Slider extends Component {
 			}
 		}
 
-		if (this.props.value.toString().trim() === '') {
-			return
-		}
-
 		this.props.onChange(
 			`${clamp(
 				parseFloat(this.getMin(), 10),
@@ -268,11 +260,6 @@ export default class Slider extends Component {
 				this.props.onChange('CT_CSS_SKIP_RULE')
 				return
 			}
-		}
-
-		if (value.toString().trim() === '') {
-			this.props.onChange('')
-			return
 		}
 
 		this.props.onChange(

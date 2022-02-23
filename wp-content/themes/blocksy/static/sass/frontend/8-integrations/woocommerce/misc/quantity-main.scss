@@ -53,8 +53,4 @@ div.quantity {
 			box-shadow: 0 0 0 1px var(--quantity-initial-color, var(--buttonInitialColor));
 		}
 	}
-
-	&.hidden {
-		display: none;
-	}
 }

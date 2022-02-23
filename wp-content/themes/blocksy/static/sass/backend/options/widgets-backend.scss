@@ -1,11 +1,6 @@
 // block widgets
 .ct-option-widget-area {
 	margin-top: 15px;
-
-	.editor-styles-wrapper {
-		padding: 0;
-		background: transparent;
-	}
 }
 
 // block widgets panel
@@ -15,25 +10,6 @@
 		margin-top: -7px;
 	}
 }
-
-.ct-customizer-panel {
-
-	.customize-widgets-layout__inspector {
-		.customize-section-description-container {
-			display: none;
-		}
-
-		> form {
-			margin: -12px;
-		}
-	}
-
-	&.ct-panel-second-level > div:last-child {
-		z-index: 10;
-		background: inherit;
-	}
-}
-
 
 // classic widgets
 .widget-inside {

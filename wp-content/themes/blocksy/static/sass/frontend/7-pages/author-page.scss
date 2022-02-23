@@ -14,9 +14,6 @@
 	margin-right: -8px;
 	margin-bottom: -10px;
 
-	--icon-size: 12px;
-	--icon-color: #fff;
-
 	a {
 		display: inline-flex;
 		align-items: center;
@@ -25,14 +22,13 @@
 		height: 30px;
 		border-radius: 100%;
 		margin: 0 5px 10px 5px;
-		background: var(--background-color, var(--paletteColor1));
+		background: var(--paletteColor1);
+
+		--icon-size: 12px;
+		--icon-color: #fff;
 
 		&:hover {
-			background: var(--background-hover-color, var(--paletteColor2));
-
-			.ct-icon {
-				fill: var(--icon-hover-color, #fff);	
-			}
+			background: var(--paletteColor2);
 		}
 	}
 }

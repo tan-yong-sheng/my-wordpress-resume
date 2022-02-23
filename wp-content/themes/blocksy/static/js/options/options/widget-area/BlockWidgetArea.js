@@ -59,18 +59,15 @@ const BlockWidgetArea = ({
 			;[...parentEl.current.querySelectorAll('.ct-loader')].map((el) =>
 				el.remove()
 			)
-
 			let sidebarForCleanup = 'ct-footer-sidebar-1'
 
 			if (sidebarId === 'ct-footer-sidebar-1') {
 				sidebarForCleanup = 'ct-footer-sidebar-2'
 			}
 
-			const clearControl =
-				wp.customize.control._value[
-					`sidebars_widgets[${sidebarForCleanup}]`
-				]
-			clearControl.subscribers.forEach((c) => {
+			wp.customize.control._value[
+				`sidebars_widgets[${sidebarForCleanup}]`
+			].subscribers.forEach((c) => {
 				c(true)
 			})
 
@@ -107,46 +104,11 @@ const BlockWidgetArea = ({
 						return
 					}
 
-					wp.customize.bind('save-request-params', () => {
-						if (!controlForSidebarId) {
-							return
-						}
-
-						controlForSidebarId.inspector.expanded = () => {
-							return false
-						}
-						controlForSidebarId.inspector.expanded.get = () => false
-						controlForSidebarId.inspector.expanded.set = () => {}
-					})
-
-					wp.customize.bind('saved', () => {
-						if (!controlForSidebarId) {
-							return
-						}
-
-						setTimeout(() => {
-							controlForSidebarId.inspector.expanded = () => {
-								return true
-							}
-							controlForSidebarId.inspector.expanded.get = () =>
-								true
-							controlForSidebarId.inspector.expanded.set = () => {}
-						}, 500)
-					})
-
 					controlForSidebarId.inspector.oldExpanded =
 						controlForSidebarId.inspector.expanded
-					controlForSidebarId.inspector.expanded = () => {
-						return true
-					}
+					controlForSidebarId.inspector.expanded = () => true
 					controlForSidebarId.inspector.expanded.get = () => true
 					controlForSidebarId.inspector.expanded.set = () => {}
-
-					let inspectorContainer =
-						controlForSidebarId.inspector.contentContainer[0]
-
-					inspectorContainer.className =
-						'customize-widgets-layout__inspector'
 
 					parentEl.current
 						.closest('.ct-customizer-panel')
@@ -154,10 +116,14 @@ const BlockWidgetArea = ({
 							'.customizer-panel-content'
 						)
 						.appendChild(
-							controlForSidebarId.inspector.contentContainer[0]
+							controlForSidebarId.inspector.contentContainer[0].querySelector(
+								'form'
+							)
 						)
 				})
 			}, 10)
+
+			controlForSidebarId.oldContainer.remove()
 
 			wp.customize.section(controlForSidebarId.section()).container = $(
 				parentEl.current
@@ -166,31 +132,45 @@ const BlockWidgetArea = ({
 			observer.observe(parentEl.current.parentNode, config)
 		}
 
-		if (
-			document.body.classList.contains('ready') &&
-			document
-				.querySelector('#customize-preview')
-				.classList.contains('iframe-ready')
-		) {
-			setTimeout(() => {
-				actuallyMountWidgetArea()
-			}, 600)
-		} else {
-			wp.customize.previewer.bind('ready', () => {
-				setTimeout(() => {
-					actuallyMountWidgetArea()
-				}, 600)
-			})
-		}
+		const hasWidgetAreaMounted = document.querySelector(
+			'.ct-customizer-panel .customize-widgets-header'
+		)
+
+		setTimeout(() => {
+			actuallyMountWidgetArea()
+		}, 600)
 
 		return () => {
-			controlForSidebarId.container[0].remove()
+			if (!parentEl.current) {
+				return
+			}
+			if (!parentEl.current.querySelector('.customize-widgets-header')) {
+				return
+			}
+
+			if (
+				!parentEl.current
+					.closest('.ct-customizer-panel')
+					.lastElementChild.querySelector(
+						'.customizer-panel-content form'
+					)
+			) {
+				return
+			}
 
 			controlForSidebarId.container = controlForSidebarId.oldContainer
 			observer.disconnect()
 
 			controlForSidebarId.inspector.expanded =
 				controlForSidebarId.inspector.oldExpanded
+
+			controlForSidebarId.inspector.contentContainer[0].appendChild(
+				parentEl.current
+					.closest('.ct-customizer-panel')
+					.lastElementChild.querySelector(
+						'.customizer-panel-content form'
+					)
+			)
 
 			panelsDispatch({
 				type: 'PANEL_RECEIVE_META',

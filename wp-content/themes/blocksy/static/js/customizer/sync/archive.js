@@ -1,4 +1,4 @@
-import { getOptionFor } from './helpers'
+import { getCache, getOptionFor } from './helpers'
 import ctEvents from 'ct-events'
 
 export const getPrefixFor = () => {

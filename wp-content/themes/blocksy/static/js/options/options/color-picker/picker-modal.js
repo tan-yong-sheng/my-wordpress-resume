@@ -222,6 +222,7 @@ const PickerModal = ({
 				)}
 
 				<ColorPickerIris
+					key={getValueForPicker.key}
 					onChange={(v) => onChange(v)}
 					value={{
 						...value,

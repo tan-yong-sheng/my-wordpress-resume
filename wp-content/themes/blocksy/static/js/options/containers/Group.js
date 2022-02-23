@@ -9,15 +9,14 @@ import {
 import ResponsiveControls from '../../customizer/components/responsive-controls'
 
 const Group = ({ renderingChunk, value, onChange, purpose, hasRevertButton }) =>
-	renderingChunk.map((groupOption) => {
+	renderingChunk.map((conditionOption) => {
 		const {
 			label,
 			options,
 			id,
 			attr = {},
-			wrapperAttr = {},
 			responsive = false,
-		} = groupOption
+		} = conditionOption
 		const { currentView } = useDeviceManagerState()
 		const { setDevice } = useDeviceManagerActions()
 
@@ -32,7 +31,7 @@ const Group = ({ renderingChunk, value, onChange, purpose, hasRevertButton }) =>
 		)
 
 		return (
-			<div key={id} className="ct-controls-group" {...wrapperAttr}>
+			<div key={id} className="ct-controls-group">
 				{label && (
 					<header>
 						<label>{label}</label>

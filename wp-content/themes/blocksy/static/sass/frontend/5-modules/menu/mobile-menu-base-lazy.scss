@@ -1,25 +1,5 @@
 .mobile-menu {
 
-	li {
-		&:hover > .ct-sub-menu-parent,
-		&.dropdown-active > .ct-sub-menu-parent,
-		&[class*="current-menu-"] > .ct-sub-menu-parent {
-
-			.ct-menu-link,
-			.ct-toggle-dropdown-mobile {
-				color: inherit;
-			}
-		}
-
-		&.dropdown-active > .ct-sub-menu-parent {
-			color: var(--linkHoverColor);
-
-			svg {
-				fill: var(--icon-hover-color, var(--linkHoverColor));
-			}
-		}
-	}
-
 	[class*="children"] > ul {
 		li {
 			a {
@@ -28,6 +8,7 @@
 					content: '';
 					top: calc(50% - 2px);
 					left: -30px;
+					// inset-inline-start: -30px;
 					width: 3px;
 					height: calc(3px * var(--has-indentation, 1));
 					opacity: 0.3;
@@ -41,6 +22,34 @@
 		}
 	}
 
+	.ct-sub-menu-parent:hover,
+	.current-menu-item > .ct-sub-menu-parent {
+
+		.ct-menu-link,
+		.ct-toggle-dopdown-mobile {
+			color: inherit;
+		}
+	}
+
+	// hover & active state
+	// li > .ct-sub-menu-parent:hover {
+	// 	> a,
+	// 	.ct-toggle-dopdown-mobile {
+	// 		color: var(--linkHoverColor);
+	// 		--icon-color: var(--icon-hover-color, var(--linkHoverColor));
+	// 	}
+	// }
+
+	// li.current-menu-item > .ct-sub-menu-parent {
+	// 	> a,
+	//  	.ct-toggle-dopdown-mobile {
+	// 		color: var(--linkActiveColor, var(--linkHoverColor));
+	// 		--icon-color: var(--icon-active-color, var(--icon-hover-color, var(--linkActiveColor, var(--linkHoverColor))));
+	// 	}
+	// }
+
+
+
 
 	[class*="children"] > ul li a:hover,
 	[class*="children"] > ul li.dropdown-active > .ct-sub-menu-parent > a {
@@ -51,7 +60,7 @@
 	}
 
 	// toggle
-	.ct-toggle-dropdown-mobile {
+	.ct-toggle-dopdown-mobile {
 		color: var(--linkInitialColor);
 		flex: 0 0 var(--toggle-button-size, 25px);
 
@@ -74,7 +83,7 @@
 	// toggle shape with border
 	&[data-toggle-type="type-2"] {
 
-		.ct-toggle-dropdown-mobile {
+		.ct-toggle-dopdown-mobile {
 			--toggle-button-margin-end: 0;
 			--toggle-button-radius: 3px;
 			--toggle-button-border-width: 1px;
@@ -92,7 +101,6 @@
 	}
 
 	li,
-	.menu-item-has-children > a,
 	.dropdown-active > .ct-sub-menu-parent {
 		border-bottom: var(--mobile-menu-divider);
 	}

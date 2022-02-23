@@ -135,23 +135,8 @@ const LabeledGroup = ({
 						)}
 						className="ct-revert"
 						onClick={() => {
-							groupOption.choices.reduce(
-								(previousPromise, nextChoice) => {
-									return previousPromise.then(() => {
-										return new Promise((r) => {
-											setTimeout(() => {
-												onChange(
-													nextChoice.id,
-													groupOption.options[
-														nextChoice.id
-													].value
-												)
-												r()
-											})
-										})
-									})
-								},
-								Promise.resolve()
+							groupOption.choices.map(({ id }) =>
+								onChange(id, groupOption.options[id].value)
 							)
 						}}
 					/>

@@ -1,8 +1,5 @@
 import ctEvents from 'ct-events'
-import {
-	updateVariableInStyleTags,
-	clearAstCache,
-} from 'customizer-sync-helpers'
+import { handleSingleVariableFor, mountAstCache } from 'customizer-sync-helpers'
 import { getValueFromInput } from '../../options/helpers/get-value-from-input'
 import $ from 'jquery'
 import { __ } from 'ct-i18n'
@@ -12,7 +9,7 @@ import {
 	shortenItemId,
 } from '../../customizer/panels-builder/placements/helpers'
 
-export function isFunction(functionToCheck) {
+function isFunction(functionToCheck) {
 	return (
 		functionToCheck &&
 		{}.toString.call(functionToCheck) === '[object Function]'
@@ -64,14 +61,37 @@ const handleItemChangeFor = (args = {}) => {
 		return
 	}
 
-	updateVariableInStyleTags({
-		variableDescriptor: Array.isArray(descriptor)
-			? descriptor
-			: [descriptor],
+	;(Array.isArray(descriptor) ? descriptor : [descriptor]).map((d) =>
+		handleSingleVariableFor(d, d.fullValue ? values : optionValue)
+	)
+}
 
-		value: optionValue,
-		fullValue: values,
-	})
+const compare = function (obj1, obj2) {
+	if (typeof obj1 !== typeof obj2) {
+		return false
+	}
+
+	if (typeof obj1 !== 'object' && typeof obj2 !== 'object') {
+		return obj1 === obj2
+	}
+
+	for (var p in obj1) {
+		if (obj1.hasOwnProperty(p) !== obj2.hasOwnProperty(p)) return false
+
+		switch (typeof obj1[p]) {
+			case 'object':
+				if (!compare(obj1[p], obj2[p])) return false
+				break
+			default:
+				if (obj1[p] != obj2[p]) return false
+		}
+	}
+
+	for (var p in obj2) {
+		if (typeof obj1[p] == 'undefined') return false
+	}
+
+	return true
 }
 
 setTimeout(() => {
@@ -182,17 +202,19 @@ wp.customize.bind('preview-ready', () => {
 
 			const deviceMapping = {
 				desktop: 'ct-main-styles-inline-css',
+				tablet: 'ct-main-styles-tablet-inline-css',
+				mobile: 'ct-main-styles-mobile-inline-css',
 			}
 
-			;['desktop'].map((device) => {
+			;['desktop', 'tablet', 'mobile'].map((device) => {
 				const cssContainer = document.querySelector(
 					`style#${deviceMapping[device]}`
 				)
 
-				cssContainer.innerText = response.ct_dynamic_css
+				cssContainer.innerText = response.ct_dynamic_css[device]
 			})
 
-			clearAstCache()
+			mountAstCache()
 		}
 	)
 
@@ -365,15 +387,15 @@ wp.customize.bind('preview-ready', () => {
 				})
 
 				if (enabledRows.length > 0) {
-					updateVariableInStyleTags({
-						variableDescriptor: {
+					handleSingleVariableFor(
+						{
 							selector: `[data-header*="${document.body.dataset.header}"]`,
 							variable: 'header-height',
 							responsive: true,
 							unit: 'px',
 						},
 
-						value: enabledRows.reduce(
+						enabledRows.reduce(
 							(currentDescriptor, currentRow) => {
 								const defaults = {
 									'top-row': {
@@ -420,8 +442,8 @@ wp.customize.bind('preview-ready', () => {
 								tablet: 0,
 								desktop: 0,
 							}
-						),
-					})
+						)
+					)
 				}
 			}
 

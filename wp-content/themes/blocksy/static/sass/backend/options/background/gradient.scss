@@ -1,4 +1,4 @@
-[class*="ct-gradient-tab"] {
+.ct-gradient-tab {
 	
 	.components-circular-option-picker {
 		margin: 0;
@@ -12,7 +12,6 @@
 
 	.components-custom-gradient-picker__gradient-bar {
 		margin: 0;
-		// border-radius: 5px;
 		box-sizing: border-box;
 	}
 
@@ -84,21 +83,6 @@
 	.components-custom-gradient-picker__inserter {
 		.components-popover {
 			margin-top: 10px;
-		}
-	}
-}
-
-// new gradient option
-.ct-gradient-tab-new {
-
-	.components-popover {
-		margin-top: 51px;
-		margin-left: -30px;
-	}
-
-	.components-custom-gradient-picker__inserter {
-		.components-popover {
-			margin-top: 33px;
 		}
 	}
 }

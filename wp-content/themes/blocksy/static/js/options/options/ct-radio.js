@@ -2,87 +2,77 @@ import { createElement, Component } from '@wordpress/element'
 import classnames from 'classnames'
 import { normalizeCondition, matchValuesWithCondition } from 'match-conditions'
 
-const RadioInput = (props) => {
-	const { inline = false } = props.option
+export default class Radio extends Component {
+	renderAsText() {}
 
-	return (
-		<div
-			className="ct-radio-option"
-			{...(inline ? { ['data-inline']: '' } : {})}
-			{...(props.option.attr || {})}>
-			{Object.keys(props.option.choices).map((choice) => (
-				<label key={choice}>
-					<input
-						type="radio"
-						checked={choice === props.value}
-						onChange={() => props.onChange(choice)}
-					/>
+	renderAsRadio() {
+		const { inline = false } = this.props.option
 
-					{props.option.choices[choice]}
-				</label>
-			))}
-		</div>
-	)
-}
+		return (
+			<div
+				className="ct-radio-option"
+				{...(inline ? { ['data-inline']: '' } : {})}
+				{...(this.props.option.attr || {})}>
+				{Object.keys(this.props.option.choices).map((choice) => (
+					<label key={choice}>
+						<input
+							type="radio"
+							checked={choice === this.props.value}
+							onChange={() => this.props.onChange(choice)}
+						/>
 
-const DefaultRadio = ({
-	option,
-	values,
-	value,
-	onChange,
-	singleChoiceProps,
-}) => {
-	const { inline = false } = option
-
-	return (
-		<ul
-			className="ct-radio-option ct-buttons-group"
-			{...(inline ? { ['data-inline']: '' } : {})}
-			{...(option.attr || {})}>
-			{Object.keys(option.choices)
-				.filter((choice) => {
-					if (!option.conditions) {
-						return true
-					}
-
-					if (!option.conditions[choice]) {
-						return true
-					}
-
-					return matchValuesWithCondition(
-						normalizeCondition(option.conditions[choice]),
-						values
-					)
-				})
-				.map((choice, index) => (
-					<li
-						className={classnames({
-							active: choice === value,
-						})}
-						onClick={() => onChange(choice)}
-						key={choice}
-						dangerouslySetInnerHTML={{
-							__html: option.choices[choice],
-						}}
-						{...(singleChoiceProps
-							? singleChoiceProps(choice)
-							: {})}
-					/>
+						{this.props.option.choices[choice]}
+					</label>
 				))}
-		</ul>
-	)
-}
-
-const Radio = (props) => {
-	const {
-		option: { view },
-	} = props
-
-	if (view === 'radio') {
-		return <RadioInput {...props} />
+			</div>
+		)
 	}
 
-	return <DefaultRadio {...props} />
-}
+	render() {
+		if (this.props.option.view === 'radio') {
+			return this.renderAsRadio()
+		}
 
-export default Radio
+		const { inline = false } = this.props.option
+
+		return (
+			<ul
+				className="ct-radio-option ct-buttons-group"
+				{...(inline ? { ['data-inline']: '' } : {})}
+				{...(this.props.option.attr || {})}>
+				{Object.keys(this.props.option.choices)
+					.filter((choice) => {
+						if (!this.props.option.conditions) {
+							return true
+						}
+
+						if (!this.props.option.conditions[choice]) {
+							return true
+						}
+
+						return matchValuesWithCondition(
+							normalizeCondition(
+								this.props.option.conditions[choice]
+							),
+							this.props.values
+						)
+					})
+					.map((choice) => (
+						<li
+							className={classnames({
+								active: choice === this.props.value,
+							})}
+							onClick={() => this.props.onChange(choice)}
+							key={choice}
+							dangerouslySetInnerHTML={{
+								__html: this.props.option.choices[choice],
+							}}
+							{...(this.props.singleChoiceProps
+								? this.props.singleChoiceProps(choice)
+								: {})}
+						/>
+					))}
+			</ul>
+		)
+	}
+}

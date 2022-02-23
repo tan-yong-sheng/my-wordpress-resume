@@ -72,23 +72,22 @@ const SecondaryItems = ({
 				pull: 'clone',
 			}}
 			draggableId={'available-items'}
-			items={[...secondaryItems.map(({ id }) => id), ...allDynamicItems]
-				.filter((el) =>
-					allItems.some(({ id }) => id === getOriginalId(el))
+			items={[
+				...secondaryItems.map(({ id }) => id),
+				...allDynamicItems,
+			].sort((a, b) => {
+				const aItemData = ct_customizer_localizations.header_builder_data[
+					'header'
+				].find(({ id }) => id === getOriginalId(a))
+
+				const bItemData = ct_customizer_localizations.header_builder_data[
+					'header'
+				].find(({ id }) => id === getOriginalId(b))
+
+				return aItemData.config.name.localeCompare(
+					bItemData.config.name
 				)
-				.sort((a, b) => {
-					const aItemData = allItems.find(
-						({ id }) => id === getOriginalId(a)
-					)
-
-					const bItemData = allItems.find(
-						({ id }) => id === getOriginalId(b)
-					)
-
-					return aItemData.config.name.localeCompare(
-						bItemData.config.name
-					)
-				})}
+			})}
 			hasPointers={false}
 			displayWrapper={displayList}
 			propsForItem={(item) => ({
@@ -135,20 +134,6 @@ const SecondaryItems = ({
 					}
 
 					const id = `builder_panel_${item}`
-
-					const itemsOnlyWithTrigger = [
-						'mobile-menu',
-						'offcanvas-logo',
-					]
-
-					const isSidebarRepresentationPresent =
-						displayList &&
-						itemData.config.devices.includes(currentView) &&
-						(!itemsOnlyWithTrigger.includes(item) ||
-							(itemsOnlyWithTrigger.includes(item) &&
-								(currentView !== 'desktop' ||
-									inlinedItemsFromBuilder.indexOf('trigger') >
-										-1)))
 
 					let itemTitle = itemData.config.name
 
@@ -231,32 +216,41 @@ const SecondaryItems = ({
 										/>
 									)}
 
-									{isSidebarRepresentationPresent && (
-										<div
-											data-id={item}
-											className={cls({
-												'ct-item-in-builder': itemInBuilder,
-												'ct-builder-item': !itemInBuilder,
-											})}
-											onClick={(e) => {
-												if (isDragging) {
-													return
-												}
+									{itemData.config.devices.indexOf(
+										currentView
+									) > -1 &&
+										(item !== 'mobile-menu' ||
+											(item === 'mobile-menu' &&
+												(currentView !== 'desktop' ||
+													inlinedItemsFromBuilder.indexOf(
+														'trigger'
+													) > -1))) &&
+										displayList && (
+											<div
+												data-id={item}
+												className={cls({
+													'ct-item-in-builder': itemInBuilder,
+													'ct-builder-item': !itemInBuilder,
+												})}
+												onClick={(e) => {
+													if (isDragging) {
+														return
+													}
 
-												itemInBuilder && open()
-											}}>
-											{itemName}
+													itemInBuilder && open()
+												}}>
+												{itemName}
 
-											<Slot
-												name={`PlacementsBuilderSidebarItem_${index}`}
-												fillProps={{
-													item,
-													itemInBuilder,
-													itemData,
-												}}
-											/>
-										</div>
-									)}
+												<Slot
+													name={`PlacementsBuilderSidebarItem_${index}`}
+													fillProps={{
+														item,
+														itemInBuilder,
+														itemData,
+													}}
+												/>
+											</div>
+										)}
 								</Fragment>
 							)}></PanelMetaWrapper>
 					)

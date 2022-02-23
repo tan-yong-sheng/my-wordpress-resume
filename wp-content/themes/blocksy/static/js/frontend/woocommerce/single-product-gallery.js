@@ -173,31 +173,24 @@ export const mount = (el, { event: mountEvent }) => {
 						return
 					}
 
-					if (
-						parseFloat(el.getAttribute('data-width')) >
-						el
-							.closest('.woocommerce-product-gallery')
-							.getBoundingClientRect().width
-					) {
-						$(el).zoom({
-							url: el.href,
-							touch: false,
-							duration: 50,
+					$(el).zoom({
+						url: el.href,
+						touch: false,
+						duration: 50,
 
-							...(rect.width > parseFloat(el.dataset.width) ||
-							rect.height > parseFloat(el.dataset.height)
-								? {
-										magnify: 2,
-								  }
-								: {}),
+						...(rect.width > parseFloat(el.dataset.width) ||
+						rect.height > parseFloat(el.dataset.height)
+							? {
+									magnify: 2,
+							  }
+							: {}),
 
-							...(isTouchDevice()
-								? {
-										on: 'toggle',
-								  }
-								: {}),
-						})
-					}
+						...(isTouchDevice()
+							? {
+									on: 'toggle',
+							  }
+							: {}),
+					})
 				}
 			}
 		})

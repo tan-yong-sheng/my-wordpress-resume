@@ -2,8 +2,9 @@
 	--items-spacing: 9px;
 
 	li {
-		// display: inline;
-		display: inline-block;
+		display: inline;
+		// margin-inline-end: var(--items-spacing);
+		// margin-right: var(--items-spacing);
 
 		&:not(:last-of-type) {
 			margin-inline-end: var(--items-spacing);
@@ -11,6 +12,7 @@
 
 		&:after {
 			margin-inline-start: var(--items-spacing);
+			// margin-left: var(--items-spacing);
 		}
 
 		svg,
@@ -23,12 +25,14 @@
 
 		> span {
 			margin-inline-end: 5px;
+			// margin-right: 5px;
 		}
 	}
 
 	[class*="ct-image-container"] {
 		border-radius: 100%;
 		margin-inline-end: 10px;
+		// margin-right: 10px;
 
 		+ svg {
 			display: none;
@@ -38,6 +42,7 @@
 	svg {
 		fill: currentColor;
 		margin-inline-end: 7px;
+		// margin-right: 7px;
 	}
 
 	// meta style

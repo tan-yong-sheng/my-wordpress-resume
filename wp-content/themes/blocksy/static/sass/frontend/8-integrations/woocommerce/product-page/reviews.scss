@@ -1,6 +1,12 @@
-[data-content="normal"] .woocommerce-Reviews {
+.woocommerce-Reviews {
+	@include media-breakpoint-down (md) {
+		#comments {
+			margin-bottom: 40px;
+		}
+	}
+	
 	@include media-breakpoint-up (lg) {
-		flex-direction: row;
+		display: flex;
 		justify-content: space-between;
 
 		#comments,
@@ -8,30 +14,6 @@
 			width: 47%;
 		}
 	}
-
-	// @include media-breakpoint-up (lg) {
-	// 	display: flex;
-	// 	justify-content: space-between;
-
-	// 	#comments,
-	// 	#review_form_wrapper {
-	// 		width: 47%;
-	// 	}
-	// }
-}
-
-.woocommerce-Reviews {
-	display: flex;
-	flex-direction: column;
-	row-gap: 40px;
-
-
-
-	// @include media-breakpoint-down (md) {
-		#comments {
-			// margin-bottom: 40px;
-		}
-	// }
 
 	h2,
 	.comment-reply-title {
@@ -73,7 +55,7 @@
 	}
 
 	.comment-text {
-		padding-inline-start: 70px;
+		padding-left: 70px;
 
 		.description > * {
 			margin: 20px 0 0 0;

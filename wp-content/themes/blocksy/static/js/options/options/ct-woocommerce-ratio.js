@@ -32,12 +32,12 @@ const WooCommerceRatio = ({
 
 				onChangeFor(
 					'woocommerce_thumbnail_cropping_custom_height',
-					parseFloat(height || '0') || 0
+					parseFloat(height)
 				)
 
 				onChangeFor(
 					'woocommerce_thumbnail_cropping_custom_width',
-					parseFloat(width || '0') || 0
+					parseFloat(width)
 				)
 			}}
 			value={
