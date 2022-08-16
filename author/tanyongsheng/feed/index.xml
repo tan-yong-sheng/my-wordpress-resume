@@ -9,8 +9,8 @@
 
 <channel>
 	<title>tanyongsheng &#8211; Tan Yong Sheng</title>
-	<atom:link href="https://tanyongsheng.xyz/author/tanyongsheng/feed/" rel="self" type="application/rss+xml" />
-	<link>https://tanyongsheng.xyz</link>
+	<atom:link href="/author/tanyongsheng/feed/" rel="self" type="application/rss+xml" />
+	<link></link>
 	<description></description>
 	<lastBuildDate>Thu, 30 Dec 2021 10:47:09 +0000</lastBuildDate>
 	<language>en-US</language>
@@ -21,28 +21,28 @@
 	<generator>https://wordpress.org/?v=6.0.1</generator>
 
 <image>
-	<url>https://tanyongsheng.xyz/wp-content/uploads/2022/01/TYS-round-photo.jpg</url>
+	<url>/wp-content/uploads/2022/01/TYS-round-photo.jpg</url>
 	<title>tanyongsheng &#8211; Tan Yong Sheng</title>
-	<link>https://tanyongsheng.xyz</link>
+	<link></link>
 	<width>32</width>
 	<height>32</height>
 </image> 
 	<item>
 		<title>Hello world!</title>
-		<link>https://tanyongsheng.xyz/hello-world/</link>
-					<comments>https://tanyongsheng.xyz/hello-world/#comments</comments>
+		<link>/hello-world/</link>
+					<comments>/hello-world/#comments</comments>
 		
 		<dc:creator><![CDATA[tanyongsheng]]></dc:creator>
 		<pubDate>Thu, 30 Dec 2021 10:47:09 +0000</pubDate>
 				<category><![CDATA[Uncategorized]]></category>
-		<guid isPermaLink="false">https://tanyongsheng.xyz/?p=1</guid>
+		<guid isPermaLink="false">/?p=1</guid>
 
 					<description><![CDATA[Welcome to WordPress. This is your first post. Edit or delete it, then start writing!]]></description>
 										<content:encoded><![CDATA[
 <p>Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p>
 ]]></content:encoded>
 					
-					<wfw:commentRss>https://tanyongsheng.xyz/hello-world/feed/</wfw:commentRss>
+					<wfw:commentRss>/hello-world/feed/</wfw:commentRss>
 			<slash:comments>1</slash:comments>
 		
 		
