@@ -2,40 +2,39 @@
 	--default-editor: var(--false);
 }
 
-
-
-// default template first sections
-
 // .ct-elementor-default-template .site-main,
 .ct-elementor-default-template {
 
-	.elementor-top-section:not(.ct-section-stretched) {
+	.elementor-top-section:not(.ct-section-stretched):not(.elementor-sticky) {
 		margin-left: var(--has-wide, auto);
 		margin-right: var(--has-wide, auto);
 		width: var(--block-width, var(--container-width));
-		max-width: var(--block-max-width, var(--container-max-width));
+		max-width: var(--block-max-width, var(--normal-container-max-width));
 	}
 
 	.elementor-section-boxed > .elementor-container {
 		width: var(--block-width, var(--container-width));
-		max-width: var(--block-max-width, var(--container-max-width));
+		max-width: var(--block-max-width, var(--normal-container-max-width));
 	}
 
-	.elementor-sticky--active {
-		left: 50%;
-		transform: translateX(-50%);
+
+	// flex container
+	.e-container {
+		--container-max-width: #{'min(var(--block-max-width, var(--normal-container-max-width)), var(--container-width-base))'};
+
+
+		// --blocksy-padding-base: calc((100% - var(--content-width)) / 2);
+
+		// --blocksy-padding-right: #{'max(var(--blocksy-padding-base), var(--padding-right))'};
+		// --blocksy-padding-left: #{'max(var(--blocksy-padding-base), var(--padding-left))'};
+
+
+		// padding: var(--padding-top)
+		// 		 var(--blocksy-padding-right) 
+		// 		 var(--padding-bottom) 
+		// 		 var(--blocksy-padding-left);
 	}
 }
-
-// section container max width
-// section.elementor-section {
-// 	&.elementor-section-boxed > .elementor-container {
-// 		width: var(--block-width, var(--container-width));
-// 		max-width: var(--block-max-width, var(--container-max-width));
-// 	}
-// }
-
-
 
 
 // items spacing

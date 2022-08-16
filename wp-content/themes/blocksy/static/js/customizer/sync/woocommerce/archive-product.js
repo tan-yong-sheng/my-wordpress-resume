@@ -1,4 +1,3 @@
-import { markImagesAsLoaded } from '../../../frontend/lazy-load-helpers'
 import {
 	getCache,
 	getOptionFor,
@@ -63,7 +62,7 @@ export const replaceCards = () => {
 						'woocommerce_thumbnail_cropping_custom_height'
 				  )()}`
 				: '1/1',
-			product.querySelector('.ct-image-container .ct-ratio')
+			product.querySelector('.ct-image-container')
 		)
 	})
 	;[...document.querySelectorAll('[data-products]')].map((el) => {
@@ -83,8 +82,6 @@ export const replaceCards = () => {
 			el.classList.remove('ct-disable-transitions')
 		})
 	})
-
-	markImagesAsLoaded(document.querySelector('.shop-entries'))
 }
 
 watchOptionsWithPrefix({

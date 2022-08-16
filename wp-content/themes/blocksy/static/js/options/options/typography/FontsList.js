@@ -8,7 +8,11 @@ import {
 } from '@wordpress/element'
 import classnames from 'classnames'
 import { getDefaultFonts } from './default-data'
-import { humanizeVariations, fontFamilyToCSSFamily } from './helpers'
+import {
+	familyForDisplay,
+	humanizeVariations,
+	fontFamilyToCSSFamily,
+} from './helpers'
 import { FixedSizeList as List } from 'react-window'
 import WebFontLoader from 'webfontloader'
 import AutoSizer from 'react-virtualized-auto-sizer'
@@ -70,7 +74,7 @@ const SingleFont = ({
 			)}
 			key={family.family}>
 			<span className="ct-font-name">
-				{family.display || family.family}
+				{familyForDisplay(family.display || family.family)}
 			</span>
 			<span
 				style={{

@@ -10,7 +10,10 @@ InfiniteScroll.imagesLoaded = (fragment, fn) => fn()
 InfiniteScroll.Button.prototype.hide = () => {}
 
 export const mount = (paginationContainer) => {
-	let layoutEl = paginationContainer.previousElementSibling
+	let layoutEl = [...paginationContainer.parentNode.children].find(
+		(c) =>
+			c.classList.contains('products') || c.classList.contains('entries')
+	)
 
 	if (!paginationContainer) return
 
@@ -46,7 +49,6 @@ export const mount = (paginationContainer) => {
 					.classList.remove('ct-loading')
 
 				setTimeout(() => {
-					ctEvents.trigger('ct:images:lazyload:update')
 					ctEvents.trigger('ct:infinite-scroll:load')
 					ctEvents.trigger('blocksy:frontend:init')
 					ctEvents.trigger('blocksy:parallax:init')
@@ -94,17 +96,5 @@ function getAppendSelectorFor(layoutEl) {
 
 	return layoutEl.classList.contains('products')
 		? `#main .products > li`
-		: `.entries > *`
-
-	let maybeClosestShortcode = layoutEl.closest('[data-ct="latest-posts"]')
-
-	let prefix = ''
-
-	if (maybeClosestShortcode) {
-		prefix = `.${maybeClosestShortcode.classList[0]} `
-	}
-
-	return `${prefix}.${
-		[...layoutEl.classList].filter((c) => /ct-layout-.*/.test(c))[0]
-	} article:not(.ct-ghost-card)`
+		: `section > .entries > *`
 }

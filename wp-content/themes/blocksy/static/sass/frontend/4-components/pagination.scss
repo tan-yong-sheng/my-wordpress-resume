@@ -29,7 +29,7 @@
 		align-items: center;
 		justify-content: center;
 		height: 40px;
-		border-radius: 4px;
+		border-radius: var(--border-radius, 4px);
 		border: 2px solid transparent;
 
 		&.current {
@@ -56,7 +56,7 @@
 		justify-self: start;
 
 		svg {
-			margin-right: 8px;
+			margin-inline-end: 8px;
 		}
 	}
 
@@ -65,7 +65,7 @@
 		justify-self: end;
 
 		svg {
-			margin-left: 8px
+			margin-inline-start: 8px
 		}
 	}
 }

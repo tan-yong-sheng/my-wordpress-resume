@@ -1,5 +1,8 @@
 import ctEvents from 'ct-events'
-import { handleSingleVariableFor, mountAstCache } from 'customizer-sync-helpers'
+import {
+	updateVariableInStyleTags,
+	clearAstCache,
+} from 'customizer-sync-helpers'
 import { getValueFromInput } from '../../options/helpers/get-value-from-input'
 import $ from 'jquery'
 import { __ } from 'ct-i18n'
@@ -9,7 +12,7 @@ import {
 	shortenItemId,
 } from '../../customizer/panels-builder/placements/helpers'
 
-function isFunction(functionToCheck) {
+export function isFunction(functionToCheck) {
 	return (
 		functionToCheck &&
 		{}.toString.call(functionToCheck) === '[object Function]'
@@ -61,37 +64,14 @@ const handleItemChangeFor = (args = {}) => {
 		return
 	}
 
-	;(Array.isArray(descriptor) ? descriptor : [descriptor]).map((d) =>
-		handleSingleVariableFor(d, d.fullValue ? values : optionValue)
-	)
-}
+	updateVariableInStyleTags({
+		variableDescriptor: Array.isArray(descriptor)
+			? descriptor
+			: [descriptor],
 
-const compare = function (obj1, obj2) {
-	if (typeof obj1 !== typeof obj2) {
-		return false
-	}
-
-	if (typeof obj1 !== 'object' && typeof obj2 !== 'object') {
-		return obj1 === obj2
-	}
-
-	for (var p in obj1) {
-		if (obj1.hasOwnProperty(p) !== obj2.hasOwnProperty(p)) return false
-
-		switch (typeof obj1[p]) {
-			case 'object':
-				if (!compare(obj1[p], obj2[p])) return false
-				break
-			default:
-				if (obj1[p] != obj2[p]) return false
-		}
-	}
-
-	for (var p in obj2) {
-		if (typeof obj1[p] == 'undefined') return false
-	}
-
-	return true
+		value: optionValue,
+		fullValue: values,
+	})
 }
 
 setTimeout(() => {
@@ -120,10 +100,7 @@ const makeShortcutFor = (item) => {
 	shortcut.classList.add('ct-customizer-shortcut')
 
 	if (item.dataset.shortcut === 'drop') {
-		shortcut.innerHTML = `
-    <svg viewBox="0 0 24 24"><path d="M3,12c0,1.1,0.9,2,2,2s2-0.9,2-2s-0.9-2-2-2S3,10.9,3,12z M10,12c0,1.1,0.9,2,2,2s2-0.9,2-2s-0.9-2-2-2S10,10.9,10,12z
-   M17,12c0,1.1,0.9,2,2,2s2-0.9,2-2s-0.9-2-2-2S17,10.9,17,12z"/></svg>
-        `
+		shortcut.innerHTML = `<svg viewBox="0 0 24 24"><path d="M3,12c0,1.1,0.9,2,2,2s2-0.9,2-2s-0.9-2-2-2S3,10.9,3,12z M10,12c0,1.1,0.9,2,2,2s2-0.9,2-2s-0.9-2-2-2S10,10.9,10,12zM17,12c0,1.1,0.9,2,2,2s2-0.9,2-2s-0.9-2-2-2S17,10.9,17,12z"/></svg>`
 	} else {
 		let text = __('Edit', 'blocksy')
 
@@ -202,25 +179,27 @@ wp.customize.bind('preview-ready', () => {
 
 			const deviceMapping = {
 				desktop: 'ct-main-styles-inline-css',
-				tablet: 'ct-main-styles-tablet-inline-css',
-				mobile: 'ct-main-styles-mobile-inline-css',
 			}
 
-			;['desktop', 'tablet', 'mobile'].map((device) => {
+			;['desktop'].map((device) => {
 				const cssContainer = document.querySelector(
 					`style#${deviceMapping[device]}`
 				)
 
-				cssContainer.innerText = response.ct_dynamic_css[device]
+				cssContainer.innerText = response.ct_dynamic_css
 			})
 
-			mountAstCache()
+			clearAstCache()
 		}
 	)
 
 	wp.customize.selectiveRefresh.bind(
 		'partial-content-rendered',
 		(placement) => {
+			setTimeout(() => {
+				makeAllShortcuts()
+			}, 500)
+
 			if (!placement.container) {
 				return
 			}
@@ -341,8 +320,9 @@ wp.customize.bind('preview-ready', () => {
 						optionId,
 					] = newValue.__should_refresh_item__.split(':')
 
+
 					if (
-						expectedItemId.indexOf(itemId) > -1 &&
+						expectedItemId.indexOf(itemId) === 0 &&
 						item.config.selective_refresh.indexOf(optionId) > -1
 					) {
 						if (partial.params.loader_selector) {
@@ -387,15 +367,15 @@ wp.customize.bind('preview-ready', () => {
 				})
 
 				if (enabledRows.length > 0) {
-					handleSingleVariableFor(
-						{
+					updateVariableInStyleTags({
+						variableDescriptor: {
 							selector: `[data-header*="${document.body.dataset.header}"]`,
 							variable: 'header-height',
 							responsive: true,
 							unit: 'px',
 						},
 
-						enabledRows.reduce(
+						value: enabledRows.reduce(
 							(currentDescriptor, currentRow) => {
 								const defaults = {
 									'top-row': {
@@ -442,8 +422,8 @@ wp.customize.bind('preview-ready', () => {
 								tablet: 0,
 								desktop: 0,
 							}
-						)
-					)
+						),
+					})
 				}
 			}
 

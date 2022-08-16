@@ -59,12 +59,14 @@ body[data-panel] {
 		padding-top: 30px;
 	}
 
-	h6 {
-		margin-bottom: 0;
+	.ct-panel-heading {
+		font-size: 15px;
+		font-weight: 600;
+		color: var(--color);
 	}
 
 	.close-button {
-		margin-left: auto;
+		margin-inline-start: auto;
 	}
 }
 
@@ -76,6 +78,6 @@ body[data-panel] {
 	align-items: var(--horizontal-alignment, flex-start);
 	overflow: var(--overflow, auto);
 	padding: var(--panel-padding, 35px);
-	padding-top: 20px;
+	// padding-top: 20px;
 	box-sizing: border-box;
 }

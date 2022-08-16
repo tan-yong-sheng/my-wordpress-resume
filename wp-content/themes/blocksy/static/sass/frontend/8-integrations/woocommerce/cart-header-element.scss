@@ -1,21 +1,6 @@
 .ct-header-cart {
 	position: relative;
-}
 
-.ct-cart-item {
-	
-	// cart badge
-	&:not([style*="counter"]) {
-		~ .ct-cart-content {
-			display: none;
-		}
-	}
-}
-
-
-// cart content
-.ct-header-cart {
-	
 	&:hover,
 	&:focus-within {
 		.ct-cart-content {
@@ -25,7 +10,6 @@
 		}
 	}
 }
-
 
 // dropdown cart view
 .ct-cart-content {
@@ -75,7 +59,7 @@
 		.button {
 			--buttonFontSize: 11px;
 			--buttonFontWeight: 600;
-			--padding: 0 10px;
+			--button-padding: 0 10px;
 			--buttonMinHeight: 45px;
 			--buttonShadow: none;
 			--buttonTransform: none;
@@ -85,11 +69,11 @@
 	}
 
 	// placement
-	@include media-breakpoint-down (xs) {
+	@include media-breakpoint-down(xs) {
 		display: none;
 	}
 
-	@include media-breakpoint-up (sm) {
+	@include media-breakpoint-up(sm) {
 		&[data-placement='left'] {
 			right: -20px;
 		}
@@ -129,23 +113,23 @@
 	ul {
 		flex: 1;
 		overflow-y: auto;
-		margin: 0 calc(var(--panel-padding, 40px) * -1);
-		padding: 0 var(--panel-padding, 40px);
+		margin: 0 calc(var(--panel-padding, 35px) * -1);
+		padding: 0 var(--panel-padding, 35px);
 	}
 
-	@include media-breakpoint-up (sm) {
+	@include media-breakpoint-up(sm) {
 		.product-title {
 			font-weight: 700;
 		}
 
 		.woocommerce-mini-cart__total {
-			font-size: 15px;
+			font-size: 13px;
 			letter-spacing: initial;
 		}
 	}
 
 	.woocommerce-mini-cart__buttons {
-		@include media-breakpoint-down (sm) {
+		@include media-breakpoint-down(sm) {
 			grid-template-columns: 1fr;
 			grid-row-gap: 15px;
 		}

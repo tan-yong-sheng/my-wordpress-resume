@@ -20,9 +20,8 @@ const SecondaryItems = ({
 	inlinedItemsFromBuilder,
 	displayList = true,
 }) => {
-	const { panelsState, panelsActions, currentView, isDragging } = useContext(
-		DragDropContext
-	)
+	const { panelsState, panelsActions, currentView, isDragging } =
+		useContext(DragDropContext)
 
 	const inlinedItemsFromAllViewsBuilder = [
 		...builderValue.desktop.reduce(
@@ -48,11 +47,12 @@ const SecondaryItems = ({
 		),
 	]
 
-	const secondaryItems = ct_customizer_localizations.header_builder_data.secondary_items.header.filter(
-		({ config }) =>
-			// config.devices.indexOf(currentView) > -1 &&
-			config.enabled
-	)
+	const secondaryItems =
+		ct_customizer_localizations.header_builder_data.secondary_items.header.filter(
+			({ config }) =>
+				// config.devices.indexOf(currentView) > -1 &&
+				config.enabled
+		)
 
 	const allItems = ct_customizer_localizations.header_builder_data.header
 
@@ -72,22 +72,23 @@ const SecondaryItems = ({
 				pull: 'clone',
 			}}
 			draggableId={'available-items'}
-			items={[
-				...secondaryItems.map(({ id }) => id),
-				...allDynamicItems,
-			].sort((a, b) => {
-				const aItemData = ct_customizer_localizations.header_builder_data[
-					'header'
-				].find(({ id }) => id === getOriginalId(a))
-
-				const bItemData = ct_customizer_localizations.header_builder_data[
-					'header'
-				].find(({ id }) => id === getOriginalId(b))
-
-				return aItemData.config.name.localeCompare(
-					bItemData.config.name
+			items={[...secondaryItems.map(({ id }) => id), ...allDynamicItems]
+				.filter((el) =>
+					allItems.some(({ id }) => id === getOriginalId(el))
 				)
-			})}
+				.sort((a, b) => {
+					const aItemData = allItems.find(
+						({ id }) => id === getOriginalId(a)
+					)
+
+					const bItemData = allItems.find(
+						({ id }) => id === getOriginalId(b)
+					)
+
+					return aItemData.config.name.localeCompare(
+						bItemData.config.name
+					)
+				})}
 			hasPointers={false}
 			displayWrapper={displayList}
 			propsForItem={(item) => ({
@@ -135,6 +136,21 @@ const SecondaryItems = ({
 
 					const id = `builder_panel_${item}`
 
+					const itemsOnlyWithTrigger = [
+						'mobile-menu',
+						'mobile-menu-secondary',
+						'offcanvas-logo',
+					]
+
+					const isSidebarRepresentationPresent =
+						displayList &&
+						itemData.config.devices.includes(currentView) &&
+						(!itemsOnlyWithTrigger.includes(item) ||
+							(itemsOnlyWithTrigger.includes(item) &&
+								(currentView !== 'desktop' ||
+									inlinedItemsFromBuilder.indexOf('trigger') >
+										-1)))
+
 					let itemTitle = itemData.config.name
 
 					return (
@@ -150,9 +166,10 @@ const SecondaryItems = ({
 										<Panel
 											id={id}
 											getValues={() => {
-												let itemValue = builderValue.items.find(
-													({ id }) => id === item
-												)
+												let itemValue =
+													builderValue.items.find(
+														({ id }) => id === item
+													)
 
 												if (
 													itemValue &&
@@ -187,13 +204,13 @@ const SecondaryItems = ({
 												optionId,
 												optionValue
 											) => {
-												const currentValue = builderValue.items.find(
-													({ id }) => id === item
-												)
+												const currentValue =
+													builderValue.items.find(
+														({ id }) => id === item
+													)
 
 												builderValueDispatch({
-													type:
-														'ITEM_VALUE_ON_CHANGE',
+													type: 'ITEM_VALUE_ON_CHANGE',
 													payload: {
 														id: item,
 														optionId,
@@ -216,41 +233,34 @@ const SecondaryItems = ({
 										/>
 									)}
 
-									{itemData.config.devices.indexOf(
-										currentView
-									) > -1 &&
-										(item !== 'mobile-menu' ||
-											(item === 'mobile-menu' &&
-												(currentView !== 'desktop' ||
-													inlinedItemsFromBuilder.indexOf(
-														'trigger'
-													) > -1))) &&
-										displayList && (
-											<div
-												data-id={item}
-												className={cls({
-													'ct-item-in-builder': itemInBuilder,
-													'ct-builder-item': !itemInBuilder,
-												})}
-												onClick={(e) => {
-													if (isDragging) {
-														return
-													}
+									{isSidebarRepresentationPresent && (
+										<div
+											data-id={item}
+											className={cls({
+												'ct-item-in-builder':
+													itemInBuilder,
+												'ct-builder-item':
+													!itemInBuilder,
+											})}
+											onClick={(e) => {
+												if (isDragging) {
+													return
+												}
 
-													itemInBuilder && open()
-												}}>
-												{itemName}
+												itemInBuilder && open()
+											}}>
+											{itemName}
 
-												<Slot
-													name={`PlacementsBuilderSidebarItem_${index}`}
-													fillProps={{
-														item,
-														itemInBuilder,
-														itemData,
-													}}
-												/>
-											</div>
-										)}
+											<Slot
+												name={`PlacementsBuilderSidebarItem_${index}`}
+												fillProps={{
+													item,
+													itemInBuilder,
+													itemData,
+												}}
+											/>
+										</div>
+									)}
 								</Fragment>
 							)}></PanelMetaWrapper>
 					)

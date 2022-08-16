@@ -35,9 +35,6 @@
 	a {
 		display: flex;
 		align-items: center;
-		// font-size: 14px;
-		// line-height: 1.4;
-		// font-weight: 500;
 		padding: var(--items-padding, 16px);
 
 		&:not(:last-child) {
@@ -51,7 +48,12 @@
 			border-radius: 2px;
 
 			--image-spacing: 15px;
-			margin-right: var(--image-spacing);
+			margin-inline-end: var(--image-spacing);
+		}
+
+		.ct-search-item-price {
+			display: block;
+			margin-top: 5px;
 		}
 	}
 }

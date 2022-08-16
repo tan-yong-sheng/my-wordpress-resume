@@ -1,3 +1,8 @@
+.blocksy-hook-indicator,
+.ct-customizer-shortcut {
+	font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+}
+
 // hooks locations
 .blocksy-hook-indicator {
 	position: relative;
@@ -173,7 +178,7 @@ $drop-size: 22px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		top: calc(50% - #{$drop-size / 2});
+		top: calc(50% - #{calc($drop-size / 2)});
 		right: -5px;
 		width: $drop-size;
 		height: $drop-size;

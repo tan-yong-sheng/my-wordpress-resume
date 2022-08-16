@@ -38,6 +38,7 @@ div.woocommerce-product-gallery {
 			left: 0;
 			right: 0;
 			bottom: 0;
+			pointer-events: none;
 			border: 2px solid rgba(0,0,0,0);
 			transition: border-color 0.25s cubic-bezier(.215,.61,.355,1);
 		}

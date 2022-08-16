@@ -184,7 +184,8 @@ samp,
 pre {
 	tab-size: 4;
 	border-radius: 2px;
-	background: rgba(233, 235, 239, 0.5);
+	// background: rgba(233, 235, 239, 0.5);
+	background: var(--paletteColor6);
 
 	&:focus {
 		outline: none;
@@ -221,7 +222,7 @@ td {
 
 th,
 td {
-	text-align: left;
+	// text-align: left;
 	padding: var(--table-padding, 0.7em 1em);
 }
 

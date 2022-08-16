@@ -18,8 +18,6 @@ import { wooEntryPoints } from './frontend/woocommerce/main'
 
 import { mountElementorIntegration } from './frontend/integration/elementor'
 
-import { markImagesAsLoaded } from './frontend/lazy-load-helpers'
-
 /**
  * iOS hover fix
  */
@@ -67,8 +65,7 @@ export const allFrontendEntryPoints = [
 	},
 
 	{
-		els:
-			'.ct-share-box [data-network]:not([data-network="pinterest"]):not([data-network="email"])',
+		els: '.ct-share-box [data-network]:not([data-network="pinterest"]):not([data-network="email"])',
 		load: () => import('./frontend/social-buttons'),
 		trigger: ['click'],
 		condition: () =>
@@ -90,8 +87,7 @@ export const allFrontendEntryPoints = [
 	},
 
 	{
-		els:
-			'.ct-back-to-top, .ct-shortcuts-container [data-shortcut*="scroll_top"]',
+		els: '.ct-back-to-top, .ct-shortcuts-container [data-shortcut*="scroll_top"]',
 		load: () => import('./frontend/back-to-top-link'),
 		events: ['ct:back-to-top:mount'],
 		trigger: ['scroll'],
@@ -100,6 +96,7 @@ export const allFrontendEntryPoints = [
 	{
 		els: '.ct-pagination:not([data-pagination="simple"])',
 		load: () => import('./frontend/layouts/infinite-scroll'),
+		trigger: ['scroll'],
 	},
 
 	{
@@ -271,16 +268,22 @@ if ($) {
 	$(document).on('berocket_ajax_filtering_end', () => {
 		setTimeout(() => {
 			ctEvents.trigger('blocksy:frontend:init')
-			ctEvents.trigger('ct:images:lazyload:update')
 		}, 100)
 	})
 
 	$(document).on('preload', () => {
 		ctEvents.trigger('blocksy:frontend:init')
-		ctEvents.trigger('ct:images:lazyload:update')
 	})
 
 	document.addEventListener('wpfAjaxSuccess', (e) => {
+		ctEvents.trigger('blocksy:frontend:init')
+	})
+
+	document.addEventListener('facetwp-loaded', () => {
+		ctEvents.trigger('blocksy:frontend:init')
+	})
+
+	$(document).on('sf:ajaxfinish', () => {
 		ctEvents.trigger('blocksy:frontend:init')
 	})
 }
@@ -314,5 +317,4 @@ ctEvents.on(
 )
 
 export { loadStyle, handleEntryPoints, onDocumentLoaded } from './helpers'
-export { markImagesAsLoaded } from './frontend/lazy-load-helpers'
 export { registerDynamicChunk } from './dynamic-chunks'

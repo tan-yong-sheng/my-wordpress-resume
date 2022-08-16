@@ -39,7 +39,7 @@ export const mount = (el, { event }) => {
 
 	if (el.classList.contains('ct-increase')) {
 		const max = input.getAttribute('max')
-			? parseFloat(input.getAttribute('max'), 0)
+			? parseFloat(input.getAttribute('max'), 0) || Infinity
 			: Infinity
 
 		input.value =

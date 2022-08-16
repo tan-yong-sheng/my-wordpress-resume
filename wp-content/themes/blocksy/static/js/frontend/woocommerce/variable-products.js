@@ -1,6 +1,5 @@
 import $ from 'jquery'
 import ctEvents from 'ct-events'
-import { markImagesAsLoaded } from '../lazy-load-helpers'
 
 let originalImageUpdate = null
 
@@ -72,6 +71,9 @@ const replaceFirstImage = ({ container, image }) => {
 			imgContainer.dataset.width = image.full_src_w
 		}
 
+		;[...imgContainer.querySelectorAll('.zoomImg')].map((img) => {
+			img.remove()
+		})
 		;[...imgContainer.querySelectorAll('img')].map((img) => {
 			if (img.matches('.zoomImg')) {
 				return
@@ -87,35 +89,34 @@ const replaceFirstImage = ({ container, image }) => {
 
 			img.src = image.src
 
-			if (img.dataset.ctLazy) {
-				img.dataset.ctLazy = image.src
-			}
-
-			if (img.dataset.ctLazySet) {
-				img.dataset.ctLazySet = image.srcset
-			}
-
 			if (img.sizes) {
 				img.sizes = image.sizes
 			}
 
-			if (img.srcset) {
+			if (image.srcset && img.srcset && image.srcset !== 'false') {
 				img.srcset = image.srcset
+			} else {
+				img.removeAttribute('srcset')
 			}
 		})
 
-		if (imgContainer.querySelector('img.zoomImg')) {
-			if ($.fn.zoom) {
-				if (
-					(window.wp &&
-						wp.customize &&
-						wp.customize('has_product_single_zoom') &&
-						wp.customize('has_product_single_zoom')() === 'yes') ||
-					!window.wp ||
-					!wp.customize
-				) {
-					const rect = imgContainer.getBoundingClientRect()
+		if ($.fn.zoom) {
+			if (
+				(window.wp &&
+					wp.customize &&
+					wp.customize('has_product_single_zoom') &&
+					wp.customize('has_product_single_zoom')() === 'yes') ||
+				!window.wp ||
+				!wp.customize
+			) {
+				const rect = imgContainer.getBoundingClientRect()
 
+				if (
+					parseFloat(imgContainer.getAttribute('data-width')) >
+					imgContainer
+						.closest('.woocommerce-product-gallery')
+						.getBoundingClientRect().width
+				) {
 					$(imgContainer).zoom({
 						url: imgContainer.href,
 						touch: false,
@@ -148,11 +149,15 @@ const performInPlaceUpdate = ({
 }) => {
 	const currentImage = currentVariationObj
 		? { id: currentVariationObj.image_id, ...currentVariationObj.image }
-		: nextVariationObj.blocksy_original_image
+		: (nextVariationObj || {}).blocksy_original_image
 
 	const nextImage = nextVariationObj
 		? { id: nextVariationObj.image_id, ...nextVariationObj.image }
-		: currentVariationObj.blocksy_original_image
+		: (currentVariationObj || {}).blocksy_original_image
+
+	if (!nextImage) {
+		return
+	}
 
 	if (parseFloat(nextImage.id) === parseFloat(currentImage.id)) {
 		return
@@ -161,22 +166,17 @@ const performInPlaceUpdate = ({
 	// Attempt slide to image
 
 	if (container.querySelector(`.flexy-pills > *`)) {
-		let maybePillImage =
-			container.querySelector(
-				`.flexy-items [srcset*="${nextImage.src}"]`
-			) ||
-			container.querySelector(
-				`.flexy-items [data-ct-lazy-set*="${nextImage.src}"]`
-			)
+		let maybePillImage = container.querySelector(
+			`.flexy-items [srcset*="${nextImage.src}"]`
+		)
 
 		if (maybePillImage) {
 			let pillIndex = [
 				...container.querySelector(`.flexy-items`).children,
 			].indexOf(maybePillImage.closest('div'))
 
-			const pill = container.querySelector(`.flexy-pills > *`).children[
-				pillIndex
-			]
+			const pill =
+				container.querySelector(`.flexy-pills > *`).children[pillIndex]
 
 			if (pill) {
 				if (
@@ -235,6 +235,16 @@ export const mount = (el) => {
 	originalImageUpdate = $.fn.wc_variations_image_update
 
 	$.fn.wc_variations_image_update = function (variation) {
+		const currentElement = this[0]
+
+		if (
+			currentElement.closest('.woobt-products') ||
+			currentElement.closest('.upsells') ||
+			currentElement.closest('.related')
+		) {
+			return
+		}
+
 		const currentVariation = el
 			.closest('.product')
 			.querySelector('.woocommerce-product-gallery')
@@ -320,22 +330,30 @@ export const mount = (el) => {
 			const div = document.createElement('div')
 			div.innerHTML = html
 			;[...div.firstElementChild.children].map((el, index) => {
-				if (!el.matches('.flexy-container, .ct-image-container')) {
+				if (
+					!el.matches(
+						'.flexy-container, .ct-image-container, .ct-before-gallery'
+					)
+				) {
 					el.remove()
 				}
 			})
 			;[...currentVariation.children].map((el, index) => {
 				if (el.matches('.flexy-container, .ct-image-container')) {
+					el.insertAdjacentHTML(
+						'beforebegin',
+						div.firstElementChild.innerHTML
+					)
+				}
+
+				if (
+					el.matches(
+						'.flexy-container, .ct-image-container, .ct-before-gallery'
+					)
+				) {
 					el.remove()
 				}
 			})
-
-			currentVariation.insertAdjacentHTML(
-				'afterbegin',
-				div.firstElementChild.innerHTML
-			)
-
-			markImagesAsLoaded(currentVariation)
 
 			currentVariation.hasLazyLoadClickHoverListener = false
 

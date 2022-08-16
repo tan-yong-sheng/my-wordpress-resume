@@ -41,10 +41,7 @@ watchOptionsWithPrefix({
 						let button = article.querySelector('.entry-button')
 
 						if (component.id === 'featured_image' && image) {
-							setRatioFor(
-								component.thumb_ratio,
-								image.querySelector('.ct-ratio')
-							)
+							setRatioFor(component.thumb_ratio, image)
 
 							image.classList.remove('boundless-image')
 

@@ -30,21 +30,6 @@
 }
 
 
-// type 1
-[data-menu*="type-1"] > ul > li > a {
-	// --menu-item-height: auto;
-}
-// [data-menu*="type-1"] > ul > li {
-// 	&:first-child > a {
-// 		padding-inline-start: 0;
-// 	}
-
-// 	&:last-child > a {
-// 		padding-inline-end: 0;
-// 	}
-// }
-
-
 // type 2
 [data-menu*="type-2"] > ul > li {
 	> a:after {
@@ -53,7 +38,7 @@
 	}
 
 	&:hover > a,
-	&.current-menu-item > a {
+	&[class*="current-menu-"] > a {
 		--menu-indicator-opacity: 1;
 	}
 }
@@ -63,7 +48,7 @@
 	--menu-indicator-margin: 0 auto;
 
 	&:hover > a,
-	&.current-menu-item > a {
+	&[class*="current-menu-"] > a {
 		--menu-indicator-width: calc(100% - var(--menu-items-spacing, 25px));
 	}
 }
@@ -74,7 +59,7 @@
 	--menu-indicator-width: 0;
 
 	&:hover > a,
-	&.current-menu-item > a {
+	&[class*="current-menu-"] > a {
 		--menu-indicator-width: calc(100% - var(--menu-items-spacing, 25px));
 	}
 }
@@ -82,7 +67,7 @@
 // type 3
 [data-menu*="type-3"] > ul > li {
 	&:hover > a,
-	&.current-menu-item > a {
+	&[class*="current-menu-"] > a {
 		background-color: var(--menu-indicator-active-color, var(--paletteColor2));
 	}
 }
@@ -98,7 +83,7 @@
 	}
 
 	&:hover > a,
-	&.current-menu-item > a {
+	&[class*="current-menu-"] > a {
 		&:before, &:after {
 			--menu-indicator-y-position: 0px;
 			opacity: 1;

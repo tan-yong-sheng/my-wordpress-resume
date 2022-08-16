@@ -10,17 +10,22 @@ import {
 
 import classnames from 'classnames'
 
-import {
-	GradientPicker as StableGradientPicker,
-	__experimentalGradientPicker as ExperimentalGradientPicker,
-} from '@wordpress/components'
+let GradientPickerComponent = () => null
+
+setTimeout(() => {
+	if (window.wp.components) {
+		import('./gradient/index').then((res) => {
+			GradientPickerComponent = res.default
+		})
+	}
+}, 1000)
 
 const GradientPicker = ({ value, onChange }) => {
 	const allGradients = (window.ct_customizer_localizations ||
 		window.ct_localizations)['gradients']
 
-	let GradientPickerComponent =
-		StableGradientPicker || ExperimentalGradientPicker
+	// let GradientPickerComponent =
+	// StableGradientPicker || ExperimentalGradientPicker
 
 	return (
 		<Fragment>

@@ -1,3 +1,4 @@
+.wpforms-submit,
 .wp-block-button__link,
 .wp-block-file .wp-block-file__button {
 	display: inline-flex;
@@ -6,13 +7,12 @@
 	padding: var(--button-padding);
 	min-height: var(--buttonMinHeight);
 	border-radius: var(--buttonBorderRadius);
-	transition: color 0.2s ease,
-				border-color 0.2s ease,
-				background-color 0.2s ease;
+	transition: color 0.2s ease, border-color 0.2s ease,
+		background-color 0.2s ease;
 }
 
-
 // filled button
+.wpforms-submit,
 .wp-block-file .wp-block-file__button,
 .wp-block-button:not(.is-style-outline) .wp-block-button__link {
 	background-color: var(--buttonInitialColor);

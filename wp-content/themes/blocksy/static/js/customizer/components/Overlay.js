@@ -12,8 +12,6 @@ import { Transition } from 'react-spring/renderprops'
 import { __ } from 'ct-i18n'
 import classnames from 'classnames'
 
-// import '@reach/dialog/styles.css'
-
 const defaultIsVisible = (i) => !!i
 
 const Overlay = ({

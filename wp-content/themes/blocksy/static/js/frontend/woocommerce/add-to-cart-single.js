@@ -62,7 +62,7 @@ function singleProductAddToCart(wrapper) {
 
 			let error = div.querySelector('.woocommerce-error')
 
-			if (error) {
+			if (error && error.innerHTML.length > 0) {
 				let notices = document.querySelector(
 					'.woocommerce-notices-wrapper'
 				)

@@ -43,6 +43,6 @@
 	z-index: 500000;
 }
 
-.block-editor-page .ct-option-modal {
+.block-editor-page:not(.widgets-php) .ct-option-modal {
 	--modal-x-offset: 12px !important;
 }

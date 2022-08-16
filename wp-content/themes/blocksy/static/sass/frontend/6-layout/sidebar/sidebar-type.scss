@@ -89,13 +89,13 @@ aside {
 	aside[data-type='type-4']:after {
 		// prettier-ignore
 		background: var(--sidebar-background-color, var(--paletteColor8));
-		width: calc((100% + (max(100vw - var(--frame-size, 0px) * 2 - var(--container-max-width), 10vw) - var(--scrollbar-width, 0px)) / 2) * var(--has-scrollbar, 0));
+		width: calc((100% + (max(100vw - var(--frame-size, 0px) * 2 - var(--normal-container-max-width), 10vw) - var(--scrollbar-width, 0px)) / 2) * var(--has-scrollbar, 0));
 	}
 
 	[data-sidebar='right'] {
 		[data-type='type-3'],
 		[data-type='type-4'] {
-			padding-left: var(--sidebar-inner-spacing, 35px);
+			padding-inline-start: var(--sidebar-inner-spacing, 35px);
 
 			&:after {
 				left: 0;
@@ -106,7 +106,7 @@ aside {
 	[data-sidebar='left'] {
 		[data-type='type-3'],
 		[data-type='type-4'] {
-			padding-right: var(--sidebar-inner-spacing, 35px);
+			padding-inline-end: var(--sidebar-inner-spacing, 35px);
 
 			&:after {
 				right: 0;

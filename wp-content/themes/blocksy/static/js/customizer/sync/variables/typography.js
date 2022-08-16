@@ -304,6 +304,12 @@ export const getTypographyVariablesFor = () => ({
 	}),
 
 	...typographyOption({
+		id: 'cardProductExcerptFont',
+		selector:
+			'[data-products] .entry-excerpt',
+	}),
+
+	...typographyOption({
 		id: 'breadcrumbsFont',
 		selector: '.ct-breadcrumbs',
 	}),

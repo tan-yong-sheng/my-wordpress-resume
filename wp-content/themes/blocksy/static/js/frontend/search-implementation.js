@@ -6,6 +6,11 @@ import { loadStyle } from '../helpers'
 
 let alreadyRunning = false
 
+const decodeHTMLEntities = (string) => {
+	var doc = new DOMParser().parseFromString(string, 'text/html')
+	return doc.documentElement.textContent
+}
+
 const store = {}
 
 const cachedFetch = (url) =>
@@ -27,12 +32,14 @@ const getPreviewElFor = ({
 		title: { rendered },
 		link: href,
 		_embedded = {},
+		product_price = 0,
 	},
 }) => {
+	const decodedTitle = decodeHTMLEntities(rendered)
 	return (
-		<a className="ct-search-item" key={href} {...{ href }}>
+		<a className="ct-search-item" role="option" key={href} {...{ href }}>
 			{_embedded['wp:featuredmedia'] && hasThumbs && (
-				<div
+				<span
 					{...{
 						class: classnames({
 							['ct-image-container']: true,
@@ -74,25 +81,38 @@ const getPreviewElFor = ({
 								  _embedded['wp:featuredmedia'][0].source_url,
 						}}
 					/>
-					<div class="ct-ratio" />
-				</div>
+				</span>
 			)}
-
-			<span
-				dangerouslySetInnerHTML={{
-					__html: rendered,
-				}}
-				key="span"
-			/>
+			<span>
+				{decodedTitle}
+				{product_price ? (
+					<span
+						className="ct-search-item-price"
+						dangerouslySetInnerHTML={{
+							__html: product_price,
+						}}
+						key="price"
+					/>
+				) : null}
+			</span>
 		</a>
 	)
 }
 
 export const mount = (formEl, args = {}) => {
-	const clickOutsideHandler = (e) =>
-		({ mode: 'inline', ...args }.mode !== 'modal' &&
-		!formEl.contains(e.target) &&
-		fadeOutAndRemove(formEl.querySelector('.ct-search-results')))
+	const clickOutsideHandler = (e) => {
+		let mode = { mode: 'inline', ...args }.mode
+
+		if (mode === 'modal') {
+			return
+		}
+
+		if (formEl.contains(e.target)) {
+			return
+		}
+
+		fadeOutAndRemove(formEl.querySelector('.ct-search-results'))
+	}
 
 	const maybeEl = formEl.querySelector('input[type="search"]')
 	const options = {
@@ -116,6 +136,10 @@ export const mount = (formEl, args = {}) => {
 		? `ct_forced_${formEl.querySelector('[name="ct_post_type"]').value}`
 		: 'ct_forced_any'
 
+	options.productPrice = formEl.querySelector('[name="ct_product_price"]')
+		? !!formEl.querySelector('[name="ct_product_price"]').value
+		: false
+
 	if (!window.fetch) return
 
 	let listener = debounce((e) => {
@@ -124,6 +148,12 @@ export const mount = (formEl, args = {}) => {
 
 		if (e.target.value.trim().length === 0) {
 			fadeOutAndRemove(formEl.querySelector('.ct-search-results'))
+
+			let maybeStatusEl = formEl.querySelector('[aria-live]')
+
+			if (maybeStatusEl) {
+				maybeStatusEl.innerHTML = ct_localizations.search_live_no_result
+			}
 
 			return
 		}
@@ -135,7 +165,7 @@ export const mount = (formEl, args = {}) => {
 				ct_localizations.rest_url.indexOf('?') > -1 ? '&' : '?'
 			}_embed=1&post_type=${options.postType}&per_page=${
 				options.perPage
-			}&search=${e.target.value}`
+			}&product_price=${options.productPrice}&search=${e.target.value}`
 		).then((response) => {
 			let totalAmountOfPosts = parseInt(
 				response.headers.get('X-WP-Total'),
@@ -150,15 +180,13 @@ export const mount = (formEl, args = {}) => {
 
 					formEl.classList.remove('ct-searching')
 
-					let itHadSearchResultsBefore = !!formEl.querySelector(
-						'.ct-search-results'
-					)
+					let itHadSearchResultsBefore =
+						!!formEl.querySelector('.ct-search-results')
 
 					alreadyRunning = true
 
-					let searchResults = formEl.querySelector(
-						'.ct-search-results'
-					)
+					let searchResults =
+						formEl.querySelector('.ct-search-results')
 
 					let { height: heightBeforeRemoval } = searchResults
 						? searchResults.getBoundingClientRect()
@@ -185,9 +213,31 @@ export const mount = (formEl, args = {}) => {
 						}
 					}
 
+					let searchResultsCountElLabel =
+						ct_localizations.search_live_no_result
+
+					if (posts.length > 0 && e.target.value.trim().length > 0) {
+						searchResultsCountElLabel = (
+							posts.length > 1
+								? ct_localizations.search_live_many_results
+								: ct_localizations.search_live_one_result
+						).replace('%s', posts.length)
+					}
+
+					let maybeStatusEl = formEl.querySelector('[aria-live]')
+
+					if (maybeStatusEl) {
+						maybeStatusEl.innerHTML = searchResultsCountElLabel
+					}
+
 					if (posts.length > 0 && e.target.value.trim().length > 0) {
 						let searchResultsEl = (
-							<div class="ct-search-results">
+							<div
+								class="ct-search-results"
+								role="listbox"
+								aria-label={
+									ct_localizations.search_live_results
+								}>
 								{posts.map((post) =>
 									getPreviewElFor({
 										post,
@@ -220,13 +270,11 @@ export const mount = (formEl, args = {}) => {
 						if (!itHadSearchResultsBefore) {
 							fadeIn(formEl.querySelector('.ct-search-results'))
 						} else {
-							let searchResults = formEl.querySelector(
-								'.ct-search-results'
-							)
+							let searchResults =
+								formEl.querySelector('.ct-search-results')
 
-							let {
-								height: heightAfterReplace,
-							} = searchResults.getBoundingClientRect()
+							let { height: heightAfterReplace } =
+								searchResults.getBoundingClientRect()
 
 							if (heightBeforeRemoval !== heightAfterReplace) {
 								searchResults.style.height = `${heightBeforeRemoval}px`

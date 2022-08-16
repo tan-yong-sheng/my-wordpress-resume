@@ -10,6 +10,7 @@ import {
 import { maybeTransformUnorderedChoices } from '../helpers/parse-choices.js'
 import Downshift from 'downshift'
 import classnames from 'classnames'
+import { __ } from 'ct-i18n'
 
 import usePopoverMaker from '../helpers/usePopoverMaker'
 
@@ -71,13 +72,10 @@ const Select = ({
 		}, 50)
 	}, [])
 
-	if (orderedChoices.length === 0) {
-		return null
-	}
-
 	let maybeSelectedItem = orderedChoices.find(
 		({ key }) => key === potentialValue
 	)
+
 	if (!maybeSelectedItem) {
 		maybeSelectedItem = orderedChoices.find(
 			({ key }) => parseInt(key) === parseInt(potentialValue)
@@ -86,6 +84,7 @@ const Select = ({
 
 	return (
 		<Downshift
+			key={maybeSelectedItem?.key || 'downshift'}
 			onInputValueChange={(value) => {
 				onInputValueChange(value)
 			}}
@@ -271,10 +270,11 @@ const Select = ({
 							})}
 							placeholder={
 								search && isOpen
-									? searchPlaceholder || 'Type to search...'
-									: placeholder || 'Select value...'
+									? searchPlaceholder ||
+									  __('Type to search...', 'blocksy')
+									: placeholder ||
+									  __('Select value...', 'blocksy')
 							}
-							disabled={orderedChoices.length === 0}
 							readOnly={search ? !isOpen : true}
 						/>
 

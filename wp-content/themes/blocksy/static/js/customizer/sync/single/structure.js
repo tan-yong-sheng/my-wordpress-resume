@@ -3,6 +3,16 @@ import { makeVariablesWithCondition } from '../helpers/variables-with-conditions
 import { handleBackgroundOptionFor } from '../variables/background'
 import { maybePromoteScalarValueIntoResponsive } from 'customizer-sync-helpers/dist/promote-into-responsive'
 
+const getSelectorSuffixFor = (prefix) => {
+	let selectorSuffix = '[class*="ct-container"] > article[class*="post"]'
+
+	if (prefix === 'courses_single') {
+		selectorSuffix = '.tutor-col-xl-8'
+	}
+
+	return selectorSuffix
+}
+
 watchOptionsWithPrefix({
 	getPrefix: () => getPrefixFor(),
 	getOptionsForPrefix: ({ prefix }) => [`${prefix}_content_area_spacing`],
@@ -56,7 +66,9 @@ export const getSingleContentVariablesFor = () => {
 			{
 				[`${prefix}_content_style`]: [
 					{
-						selector: `[data-prefix="${prefix}"] article[class*="post"]`,
+						selector: `[data-prefix="${prefix}"] ${getSelectorSuffixFor(
+							prefix
+						)}`,
 						variable: 'has-boxed',
 						responsive: true,
 						skipOutputCheck: true,
@@ -83,7 +95,9 @@ export const getSingleContentVariablesFor = () => {
 					},
 
 					{
-						selector: `[data-prefix="${prefix}"] article[class*="post"]`,
+						selector: `[data-prefix="${prefix}"] ${getSelectorSuffixFor(
+							prefix
+						)}`,
 						variable: 'has-wide',
 						responsive: true,
 						skipOutputCheck: true,
@@ -112,13 +126,17 @@ export const getSingleContentVariablesFor = () => {
 
 				...handleBackgroundOptionFor({
 					id: `${prefix}_content_background`,
-					selector: `[data-prefix="${prefix}"] article[class*="post"]`,
+					selector: `[data-prefix="${prefix}"] ${getSelectorSuffixFor(
+						prefix
+					)}`,
 					responsive: true,
 					conditional_var: '--has-background',
 				}),
 
 				[`${prefix}_boxed_content_spacing`]: {
-					selector: `[data-prefix="${prefix}"] article[class*="post"]`,
+					selector: `[data-prefix="${prefix}"] ${getSelectorSuffixFor(
+						prefix
+					)}`,
 					type: 'spacing',
 					variable: 'boxed-content-spacing',
 					responsive: true,
@@ -126,17 +144,31 @@ export const getSingleContentVariablesFor = () => {
 				},
 
 				[`${prefix}_content_boxed_radius`]: {
-					selector: `[data-prefix="${prefix}"] article[class*="post"]`,
+					selector: `[data-prefix="${prefix}"] ${getSelectorSuffixFor(
+						prefix
+					)}`,
 					type: 'spacing',
 					variable: 'border-radius',
 					responsive: true,
 				},
 
 				[`${prefix}_content_boxed_shadow`]: {
-					selector: `[data-prefix="${prefix}"] article[class*="post"]`,
+					selector: `[data-prefix="${prefix}"] ${getSelectorSuffixFor(
+						prefix
+					)}`,
 					type: 'box-shadow',
 					variable: 'box-shadow',
 					responsive: true,
+				},
+
+				[`${prefix}_content_boxed_border`]: {
+					selector: `[data-prefix="${prefix}"] ${getSelectorSuffixFor(
+						prefix
+					)}`,
+					variable: 'boxed-content-border',
+					type: 'border',
+					responsive: true,
+					skip_none: true,
 				},
 			},
 			() => true

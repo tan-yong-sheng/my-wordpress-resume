@@ -14,7 +14,7 @@
 		align-items: center;
 		justify-content: center;
 		position: relative;
-		border-radius: 100%;
+		border-radius: var(--border-radius, 100%);
 
 		@include media-breakpoint-down(sm) {
 			--thumb-width: 45px;
@@ -55,31 +55,31 @@
 
 			svg {
 				opacity: 1;
-				transform: translate3d(0, 0, 0);
+				transform: translateX(0);
 			}
 		}
 	}
 
 	.nav-item-prev {
 		figure {
-			margin-right: var(--thumb-margin, 25px);
+			margin-inline-end: var(--thumb-margin, 25px);
 		}
 
 		svg {
-			transform: translate3d(10px, 0, 0);
+			transform: translateX(10px);
 		}
 	}
 
 	.nav-item-next {
-		text-align: right;
+		text-align: end;
 		justify-content: flex-end;
 
 		figure {
-			margin-left: var(--thumb-margin, 25px);
+			margin-inline-start: var(--thumb-margin, 25px);
 		}
 
 		svg {
-			transform: translate3d(-10px, 0, 0);
+			transform: translateX(-10px);
 		}
 	}
 

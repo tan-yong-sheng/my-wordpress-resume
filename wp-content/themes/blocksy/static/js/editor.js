@@ -104,6 +104,7 @@ const BlocksyOptions = ({
 				name={name}
 				icon={
 					<span
+						style={{display: 'flex'}}
 						dangerouslySetInnerHTML={{
 							__html: ct_editor_localizations.options_panel_svg,
 						}}

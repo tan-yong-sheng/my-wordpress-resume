@@ -6,6 +6,7 @@ input[type='text'],
 input[type='time'], // added on Dec 10th
 input[type='date'],
 input[type='datetime'], // added on Dec 10th
+input[type='datetime-local'],
 input[type='email'],
 input[type='number'],
 input[type='search'],
@@ -45,6 +46,10 @@ select {
 	background-repeat: no-repeat, repeat;
 	background-size: 8px auto, 100%;
 	background-position: right 10px top 50%, 0 0;
+
+	option {
+		color: initial;
+	}
 }
 
 textarea {

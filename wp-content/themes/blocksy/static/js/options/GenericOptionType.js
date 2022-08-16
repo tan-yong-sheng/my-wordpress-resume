@@ -34,6 +34,10 @@ export const capitalizeFirstLetter = (str) => {
 	return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
+const DefaultOptionComponent = ({ option }) => {
+	return <div>Unimplemented option: {option.type}</div>
+}
+
 export const getOptionFor = (option) => {
 	const dynamicOptionTypes = {}
 	ctEvents.trigger('blocksy:options:register', dynamicOptionTypes)
@@ -46,7 +50,7 @@ export const getOptionFor = (option) => {
 		return dynamicOptionTypes[option.type]
 	}
 
-	return null
+	return DefaultOptionComponent
 }
 
 export const optionWithDefault = ({ option, value }) =>

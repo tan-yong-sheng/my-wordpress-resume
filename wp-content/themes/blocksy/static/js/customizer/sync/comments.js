@@ -1,7 +1,5 @@
-import { markImagesAsLoaded } from '../../frontend/lazy-load-helpers'
 import {
 	getCache,
-	setRatioFor,
 	watchOptionsWithPrefix,
 	changeTagName,
 	getOptionFor,
@@ -116,7 +114,6 @@ export const renderComments = ({ prefix }) => {
 	if (window.DISQUS) {
 		window.DISQUS.host._loadEmbed()
 	}
-	markImagesAsLoaded(document.querySelector('.site-main'))
 }
 
 watchOptionsWithPrefix({

@@ -66,6 +66,13 @@ const PickerModal = ({
 			return { color: '', key: 'empty' }
 		}
 
+		if ((value.color || '').indexOf(getNoColorPropFor(option)) > -1) {
+			return {
+				key: '',
+				color: '',
+			}
+		}
+
 		if (
 			(value.color || '').indexOf(getNoColorPropFor(option)) > -1 &&
 			picker.inherit
@@ -222,7 +229,6 @@ const PickerModal = ({
 				)}
 
 				<ColorPickerIris
-					key={getValueForPicker.key}
 					onChange={(v) => onChange(v)}
 					value={{
 						...value,

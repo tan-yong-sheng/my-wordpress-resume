@@ -1,6 +1,5 @@
 /*
 import { checkAndReplace, responsiveClassesFor } from './helpers'
-import { markImagesAsLoaded } from '../../frontend/lazy-load-helpers'
 
 checkAndReplace({
 	id: 'has_trending_block',
@@ -12,7 +11,6 @@ checkAndReplace({
 	whenInserted: () => {
 		const trending = document.querySelector('.ct-trending-block')
 
-		markImagesAsLoaded(trending)
 		ctEvents.trigger('ct:trending-block:mount')
 		responsiveClassesFor('trending_block_visibility', trending)
 	}

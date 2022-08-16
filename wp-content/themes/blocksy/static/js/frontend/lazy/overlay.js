@@ -1,17 +1,7 @@
 import { enable, disable } from './overlay/no-bounce'
-import focusLock from 'dom-focus-lock'
 import ctEvents from 'ct-events'
-
 import { mount as mountMobileMenu } from './overlay/mobile-menu'
-
-let focusLockToUse = focusLock
-
-if (window.ctFrontend && window.ctFrontend.focusLock) {
-	focusLockToUse = ctFrontend.focusLock
-} else {
-	window.ctFrontend = window.ctFrontend || {}
-	window.ctFrontend.focusLock = focusLockToUse
-}
+import { focusLockOn, focusLockOff } from '../helpers/focus-lock'
 
 const showOffcanvas = (settings) => {
 	settings = {
@@ -108,7 +98,7 @@ const showOffcanvas = (settings) => {
 		)
 
 		setTimeout(() => {
-			focusLockToUse.on(
+			focusLockOn(
 				settings.container.querySelector('.ct-panel-content').parentNode
 			)
 		})
@@ -119,12 +109,12 @@ const showOffcanvas = (settings) => {
 	 * propagate the current clck event up the chain -- without the modal
 	 * getting closed.
 	 */
-	requestAnimationFrame(() => {
-		window.addEventListener('click', settings.handleWindowClick)
+	window.addEventListener('click', settings.handleWindowClick, {
+		capture: true,
 	})
 
 	ctEvents.trigger('ct:modal:opened', settings.container)
-	;[...settings.container.querySelectorAll('.ct-toggle-dopdown-mobile')].map(
+	;[...settings.container.querySelectorAll('.ct-toggle-dropdown-mobile')].map(
 		(arrow) => {
 			mountMobileMenu(arrow)
 		}
@@ -188,7 +178,7 @@ const hideOffcanvas = (settings, args = {}) => {
 							  )
 					)
 
-					focusLockToUse.off(
+					focusLockOff(
 						settings.container.querySelector('.ct-panel-content')
 							.parentNode
 					)
@@ -198,7 +188,9 @@ const hideOffcanvas = (settings, args = {}) => {
 		)
 	}
 
-	window.removeEventListener('click', settings.handleWindowClick)
+	window.removeEventListener('click', settings.handleWindowClick, {
+		capture: true,
+	})
 
 	settings.container.removeEventListener(
 		'click',
@@ -254,14 +246,11 @@ export const handleClick = (e, settings) => {
 				return
 			}
 
-			if (
-				e.target.classList.contains('ct-header-account') ||
-				e.target.closest('.ct-header-account')
-			) {
+			if (!document.body.hasAttribute('data-panel')) {
 				return
 			}
 
-			document.body.hasAttribute('data-panel') && hideOffcanvas(settings)
+			hideOffcanvas(settings)
 		},
 		...settings,
 	}
@@ -296,12 +285,47 @@ export const handleClick = (e, settings) => {
 			settings.container.hasListener = true
 
 			settings.container.addEventListener('click', (event) => {
-				if (event.target && event.target.matches('a')) {
-					hideOffcanvas(settings, {
-						closeInstant:
-							event.target.getAttribute('href')[0] !== '#',
-					})
+				if (!event.target) {
+					return
 				}
+
+				let maybeA = event.target
+
+				if (event.target.closest('a')) {
+					maybeA = event.target.closest('a')
+				}
+
+				if (!maybeA.closest('.ct-panel').classList.contains('active')) {
+					return
+				}
+
+				if (!maybeA.matches('a')) {
+					return
+				}
+
+				if (
+					!maybeA.closest('nav[data-id*="menu"]') &&
+					!maybeA.closest('[data-id*="text"]') &&
+					!maybeA.closest('[data-id*="button"]') &&
+					!maybeA.matches('.ct-offcanvas-trigger') &&
+					!maybeA.matches('.ct-header-account') &&
+					!maybeA.closest('.widget_nav_menu')
+				) {
+					return
+				}
+
+				hideOffcanvas(settings, {
+					closeInstant: maybeA.getAttribute('href')[0] !== '#',
+				})
+
+				setTimeout(() => {
+					if (
+						maybeA.matches('.ct-offcanvas-trigger') ||
+						maybeA.matches('.ct-header-account')
+					) {
+						maybeA.click()
+					}
+				}, 500)
 			})
 		}
 	}

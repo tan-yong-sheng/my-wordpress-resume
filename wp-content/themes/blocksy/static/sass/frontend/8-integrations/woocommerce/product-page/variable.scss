@@ -1,8 +1,6 @@
 form.variations_form {
 
 	table.variations {
-		border: none;
-		// margin-bottom: 1.5em;
 		margin-bottom: 1.5em;
 
 		tr {
@@ -18,9 +16,10 @@ form.variations_form {
 			}
 		}
 
-		td {
+		td, th {
+			text-align: initial;
 			padding: 0;
-			border: none;
+			// border: none;
 		}
 
 		label {

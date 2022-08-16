@@ -183,7 +183,7 @@ export const withKeys = (keys, descriptor) =>
 	)
 
 export const setRatioFor = (ratio, el) => {
-	let imgEl = el.parentNode.querySelector('[width]')
+	let imgEl = el.querySelector('[width]')
 
 	let thumb_ratio =
 		ratio === 'original'
@@ -201,9 +201,7 @@ export const setRatioFor = (ratio, el) => {
 					(ratio || '4/3').indexOf('/') > -1 ? '/' : ':'
 			  )
 
-	el.style.paddingBottom = `${Math.round(
-		(parseFloat(thumb_ratio[1]) / parseFloat(thumb_ratio[0])) * 100
-	)}%`
+	imgEl.style.aspectRatio = `${thumb_ratio[0]} / ${thumb_ratio[1]}`
 }
 
 export function changeTagName(node, name) {
@@ -371,8 +369,6 @@ export const handleResponsiveSwitch = ({
 		desktop: desktop ? on : off,
 	}),
 })
-
-export const isVisibleFor = (data) => data.mobile || data.tablet || data.desktop
 
 export const responsiveClassesFor = (data, el) => {
 	el.classList.remove('ct-hidden-sm', 'ct-hidden-md', 'ct-hidden-lg')

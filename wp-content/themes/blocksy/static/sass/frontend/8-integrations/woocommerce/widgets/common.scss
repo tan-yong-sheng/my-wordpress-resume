@@ -4,15 +4,32 @@
 	}
 }
 
+// .woocommerce-widget-layered-nav-list li {
+// 	display: flex;
+// 	align-items: center;
+
+// 	.count {
+// 		margin-inline-start: auto;
+// 		font-size: 80%;
+// 	}
+// }
+
+.wc-block-checkbox-list li label,
 .woocommerce-widget-layered-nav-list li {
 	display: flex;
 	align-items: center;
+	width: 100%;
+	
 
+	.wc-filter-element-label-list-count,
 	.count {
-		margin-inline-start: auto;
+		opacity: 1;
 		font-size: 80%;
+		margin-inline-start: auto;
 	}
 }
+
+
 
 
 .widget_rating_filter a,

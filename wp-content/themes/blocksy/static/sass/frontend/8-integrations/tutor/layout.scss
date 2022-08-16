@@ -1,7 +1,7 @@
 .tutor-container,
 .tutor-course-filter-wrapper {
 	width: var(--container-width);
-	max-width: var(--container-max-width);
+	max-width: var(--normal-container-max-width);
 	padding-left: 0;
 	padding-right: 0;
 }
@@ -12,6 +12,9 @@
 	overflow: visible;
 	display: flex;
 	flex-wrap: wrap;
+	
+	margin-left: auto;
+	margin-right: auto;
 
 	> div {
 		padding: 0;

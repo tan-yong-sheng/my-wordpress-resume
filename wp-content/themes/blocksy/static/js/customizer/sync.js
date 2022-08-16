@@ -69,6 +69,9 @@ export const updateAndSaveEl = (
 					...document.querySelectorAll(
 						`header#header [data-device="${onlyView}"] ${selector}`
 					),
+					...document.querySelectorAll(
+						`#offcanvas [data-device="${onlyView}"] ${selector}`
+					),
 			  ]
 			: [
 					...document.querySelectorAll(`header#header ${selector}`),
