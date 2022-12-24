@@ -16,14 +16,14 @@
 	border-radius: 10px;
 	color: var(--cartBadgeText, #fff);
 	background: var(--cartBadgeBackground, var(--paletteColor1));
+
+	&[data-count='0'] {
+		display: none;
+	}
 }
 
 @media (prefers-reduced-motion: no-preference) {
 	a.ct-added [class*='ct-dynamic-count'] {
 		animation: 0.6s ease-in-out 0.12s normal both 1 bounce-in;
 	}
-}
-
-.ct-header-cart [data-count='0'] {
-	display: none;
 }

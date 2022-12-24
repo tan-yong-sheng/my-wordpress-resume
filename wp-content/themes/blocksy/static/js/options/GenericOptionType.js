@@ -3,6 +3,7 @@ import {
 	Fragment,
 	Component,
 	useState,
+	useRef,
 	useEffect,
 } from '@wordpress/element'
 import classnames from 'classnames'
@@ -67,6 +68,8 @@ const GenericOptionType = ({
 	purpose,
 }) => {
 	let maybeGutenbergDevice = null
+
+	const childComponentRef = useRef(null)
 
 	if (wp.data && wp.data.useSelect) {
 		maybeGutenbergDevice = wp.data.useSelect((select) => {
@@ -357,6 +360,11 @@ const GenericOptionType = ({
 			{BeforeOptionContent && BeforeOptionContent.content}
 			<OptionComponent
 				key={id}
+				ref={(c) => {
+					if (c) {
+						childComponentRef.current = c
+					}
+				}}
 				{...{
 					option: {
 						...option,
@@ -495,6 +503,13 @@ const GenericOptionType = ({
 									)}
 									className="ct-revert"
 									onClick={() => {
+										if (
+											childComponentRef &&
+											childComponentRef.current
+										) {
+											childComponentRef.current.handleOptionRevert()
+										}
+
 										if (renderingConfig.performRevert) {
 											renderingConfig.performRevert({
 												onChangeFor,
